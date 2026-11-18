@@ -4,32 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DATAFORGE // INSTINCT OS</title>
-    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts: Fira Code & Inter -->
     <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Pyodide for In-Browser Python Execution -->
     <script src="https://cdn.jsdelivr.net/pyodide/v0.25.0/full/pyodide.js"></script>
     <script>
         tailwind.config = {
             darkMode: 'class',
             theme: {
                 extend: {
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                        mono: ['Fira Code', 'monospace'],
-                    },
-                    colors: {
-                        matrix: {
-                            50: '#f0fdf4',
-                            500: '#22c55e',
-                            600: '#16a34a',
-                            900: '#14532d',
-                            950: '#052e16',
-                        }
-                    }
+                    fontFamily: { sans: ['Inter', 'sans-serif'], mono: ['Fira Code', 'monospace'] },
+                    colors: { matrix: { 50: '#f0fdf4', 500: '#22c55e', 600: '#16a34a', 900: '#14532d', 950: '#052e16' } }
                 }
             }
         }
@@ -40,7 +25,6 @@
         ::-webkit-scrollbar { width: 6px; height: 6px; }
         ::-webkit-scrollbar-track { background: #0f172a; }
         ::-webkit-scrollbar-thumb { background: #334155; border-radius: 3px; }
-        ::-webkit-scrollbar-thumb:hover { background: #475569; }
         .glow-green { box-shadow: 0 0 20px rgba(34, 197, 94, 0.25); }
     </style>
 </head>
@@ -95,25 +79,22 @@
     <!-- MAIN CONTAINER -->
     <div class="flex-1 flex overflow-hidden">
         
-        <!-- SIDEBAR: CURRICULUM NAV -->
+        <!-- SIDEBAR -->
         <aside class="w-80 border-r border-gray-800 bg-[#0b101d] flex flex-col overflow-y-auto">
             <div class="p-4 border-b border-gray-800 flex items-center justify-between">
                 <span class="text-xs font-semibold uppercase tracking-wider text-gray-400">Curriculum (24 Weeks)</span>
                 <button onclick="resetProgress()" class="text-xs text-gray-500 hover:text-red-400 transition" title="Reset Progress"><i class="fa-solid fa-rotate-right"></i></button>
             </div>
-            <div id="sidebarMonths" class="p-3 space-y-4">
-                <!-- Dynamically populated -->
-            </div>
+            <div id="sidebarMonths" class="p-3 space-y-4"></div>
         </aside>
 
-        <!-- CENTER & RIGHT: CONTENT AREA -->
-        <main class="flex-1 flex flex-col overflow-y-auto bg-[#090d16]" id="mainContentArea">
+        <!-- CENTER & RIGHT -->
+        <main class="flex-1 flex flex-col overflow-y-auto bg-[#090d16]">
             
-            <!-- TAB 1: CURRICULUM DAY VIEW -->
+            <!-- TAB 1: CURRICULUM -->
             <div id="tabCurriculum" class="p-8 max-w-5xl mx-auto w-full space-y-6">
                 
                 <div class="bg-gradient-to-r from-gray-900 via-[#10182b] to-gray-900 border border-gray-800 p-6 rounded-2xl shadow-xl relative overflow-hidden">
-                    <div class="absolute right-0 top-0 translate-x-6 -translate-y-6 w-48 h-48 bg-matrix-500/10 rounded-full blur-3xl pointer-events-none"></div>
                     <div class="flex items-center justify-between mb-2">
                         <span id="currentDayBadge" class="text-xs font-mono px-3 py-1 rounded-full bg-matrix-950 text-matrix-400 border border-matrix-800 font-semibold">DAY 1 OF 168</span>
                         <span id="currentMonthBadge" class="text-xs text-gray-400 font-medium">Month 1: Python Foundations</span>
@@ -123,20 +104,23 @@
                 </div>
 
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                    
                     <div class="lg:col-span-2 space-y-6">
                         
-                        <!-- Video Card -->
+                        <!-- Video Card with Referrer Fix -->
                         <div class="bg-gray-900/90 border border-gray-800 rounded-2xl overflow-hidden shadow-lg">
                             <div class="px-4 py-3 bg-gray-950 border-b border-gray-800 flex items-center justify-between">
                                 <div class="flex items-center space-x-2 text-xs font-medium text-gray-300">
                                     <i class="fa-brands fa-youtube text-red-500 text-base"></i>
                                     <span>Core Lesson Video</span>
                                 </div>
-                                <a id="videoExternalLink" href="#" target="_blank" class="text-xs text-cyan-400 hover:underline flex items-center gap-1">Open on YouTube <i class="fa-solid fa-external-link-alt text-[10px]"></i></a>
+                                <a id="videoExternalLink" href="#" target="_blank" class="text-xs text-cyan-400 hover:underline flex items-center gap-1">Watch on YouTube <i class="fa-solid fa-external-link-alt text-[10px]"></i></a>
                             </div>
-                            <div class="aspect-video w-full bg-black relative flex items-center justify-center">
-                                <iframe id="lessonVideoEmbed" class="w-full h-full" src="" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                            <div class="aspect-video w-full bg-black relative flex items-center justify-center" id="videoContainer">
+                                <iframe id="lessonVideoEmbed" class="w-full h-full" src="" title="YouTube video player" frameborder="0" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                            </div>
+                            <div id="localFileNotice" class="hidden px-4 py-2 bg-amber-950/60 border-t border-amber-800/60 text-[11px] text-amber-300 flex items-center justify-between">
+                                <span><i class="fa-solid fa-circle-info mr-1"></i> Opened locally (`file://`). YouTube requires `https://` (GitHub Pages) for inline playback.</span>
+                                <a id="fallbackNoticeLink" href="#" target="_blank" class="underline font-semibold ml-2 whitespace-nowrap">Open Video ↗</a>
                             </div>
                         </div>
 
@@ -148,11 +132,11 @@
                                 </h3>
                                 <span class="text-xs font-mono bg-yellow-950/60 text-yellow-400 border border-yellow-800/60 px-2.5 py-1 rounded">20 XP reward</span>
                             </div>
-                            <p id="exercisePromptText" class="text-sm text-gray-300 leading-relaxed">Write a Python script that takes customer purchase totals and calculates loyalty tier discounts.</p>
+                            <p id="exercisePromptText" class="text-sm text-gray-300 leading-relaxed"></p>
                             
                             <div class="bg-black/80 border border-gray-800 rounded-xl p-4 font-mono text-xs text-matrix-400 overflow-x-auto">
                                 <div class="text-gray-500 mb-1"># Starter Snippet:</div>
-                                <pre id="exerciseStarterCode">order_total = 1450\n# Apply private sector e-commerce discount logic</pre>
+                                <pre id="exerciseStarterCode"></pre>
                             </div>
 
                             <div class="flex items-center justify-between pt-2">
@@ -164,12 +148,10 @@
                                 </button>
                             </div>
                         </div>
-
                     </div>
 
-                    <!-- Right Col: Instinct Mentor & Notes -->
+                    <!-- Right Col -->
                     <div class="space-y-6">
-                        
                         <div class="bg-gray-900/90 border border-gray-800 rounded-2xl p-5 flex flex-col h-[420px] shadow-lg">
                             <div class="flex items-center justify-between pb-3 border-b border-gray-800">
                                 <div class="flex items-center space-x-2">
@@ -193,12 +175,12 @@
                             </div>
 
                             <div class="flex items-center space-x-2 pt-2 border-t border-gray-800">
-                                <input type="text" id="instinctInputQuery" placeholder="Ask Instinct..." class="flex-1 bg-gray-950 border border-gray-700 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-matrix-500">
+                                <input type="text" id="instinctInputQuery" onkeydown="if(event.key==='Enter') sendInstinctQuery()" placeholder="Ask Instinct..." class="flex-1 bg-gray-950 border border-gray-700 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-matrix-500">
                                 <button onclick="sendInstinctQuery()" class="bg-matrix-600 hover:bg-matrix-500 text-black px-3 py-2 rounded-lg text-xs font-bold transition"><i class="fa-solid fa-paper-plane"></i></button>
                             </div>
                         </div>
 
-                        <!-- Q&A Notes Notebook -->
+                        <!-- Notes -->
                         <div class="bg-gray-900/90 border border-gray-800 rounded-2xl p-5 space-y-3 shadow-lg">
                             <div class="flex items-center justify-between">
                                 <h4 class="text-xs font-bold uppercase tracking-wider text-gray-300 flex items-center gap-1.5">
@@ -210,16 +192,12 @@
                                 <p class="text-gray-500 italic">No notes yet. Complete daily sessions to log insights!</p>
                             </div>
                         </div>
-
                     </div>
-
                 </div>
-
             </div>
 
-            <!-- TAB 2: TOOLBOX & PYTHON -->
+            <!-- TAB 2: TOOLBOX -->
             <div id="tabToolbox" class="p-8 max-w-5xl mx-auto w-full space-y-8 hidden">
-                
                 <div class="flex items-center justify-between">
                     <div>
                         <h2 class="text-2xl font-bold text-white flex items-center gap-2">
@@ -238,30 +216,25 @@
                         </div>
                         <span id="pyodideStatus" class="text-xs font-mono text-yellow-400 bg-yellow-950/60 px-2.5 py-1 rounded border border-yellow-800">Loading Engine...</span>
                     </div>
-                    
                     <textarea id="pythonCodeInput" rows="6" class="w-full bg-black border border-gray-800 rounded-xl p-4 font-mono text-xs text-matrix-400 focus:outline-none focus:border-matrix-500"># E-commerce Customer Churn Simulation
 orders = [1200, 450, 8900, 3200, 150]
 high_value = [o for o in orders if o > 1000]
 print(f"High-value transactions count: {len(high_value)}")
 </textarea>
-
                     <div class="flex items-center justify-between">
                         <button onclick="runPythonCode()" id="runPythonBtn" disabled class="bg-matrix-600 hover:bg-matrix-500 text-black font-bold px-6 py-2.5 rounded-xl text-xs transition flex items-center gap-2 opacity-50 cursor-not-allowed">
                             <i class="fa-solid fa-play"></i> Run Code
                         </button>
                         <button onclick="document.getElementById('pythonOutputBox').innerText=''" class="text-xs text-gray-500 hover:text-gray-300">Clear Output</button>
                     </div>
-
                     <div class="bg-black/90 border border-gray-800 rounded-xl p-4 font-mono text-xs text-gray-300 min-h-[100px] max-h-60 overflow-y-auto" id="pythonOutputBox">
                         <span class="text-gray-600">// Output will appear here...</span>
                     </div>
                 </div>
-
             </div>
 
             <!-- TAB 3: PROMPTS -->
             <div id="tabPrompts" class="p-8 max-w-5xl mx-auto w-full space-y-8 hidden">
-                
                 <div class="flex items-center justify-between">
                     <div>
                         <h2 class="text-2xl font-bold text-white flex items-center gap-2">
@@ -299,30 +272,10 @@ print(f"High-value transactions count: {len(high_value)}")
                         </button>
                     </div>
                 </div>
-
             </div>
-
         </main>
     </div>
 
-    <!-- WIN MODAL -->
-    <div id="winModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4">
-        <div class="bg-gray-900 border border-matrix-500/50 rounded-3xl p-8 max-w-md w-full text-center space-y-6 glow-green relative overflow-hidden">
-            <div class="w-16 h-16 bg-matrix-500/20 text-matrix-400 border border-matrix-500 rounded-2xl mx-auto flex items-center justify-center text-3xl">
-                <i class="fa-solid fa-trophy"></i>
-            </div>
-            <div>
-                <span class="text-xs font-mono text-matrix-400 uppercase tracking-widest">Milestone Unlocked</span>
-                <h3 id="winModalTitle" class="text-2xl font-bold text-white mt-1">Boss Level Defeated!</h3>
-                <p id="winModalDesc" class="text-sm text-gray-300 mt-2">+100 XP Awarded!</p>
-            </div>
-            <button onclick="closeWinModal()" class="w-full bg-matrix-600 hover:bg-matrix-500 text-black font-bold py-3 rounded-xl text-sm transition shadow-lg">
-                Continue Journey →
-            </button>
-        </div>
-    </div>
-
-    <!-- JAVASCRIPT LOGIC -->
     <script>
         const curriculumData = [
             {
@@ -341,25 +294,38 @@ print(f"High-value transactions count: {len(high_value)}")
             }
         ];
 
-        let currentDayIndex = 0;
-        let streak = 1;
-        let xp = 50;
-        let userNotes = [];
+        let state = JSON.parse(localStorage.getItem('dataforge_state')) || {
+            currentDayIndex: 0,
+            streak: 1,
+            xp: 50,
+            userNotes: []
+        };
 
         let allDays = [];
-        curriculumData.forEach(m => {
-            m.weeks.forEach(w => {
-                w.days.forEach(d => {
-                    allDays.push({ ...d, monthName: m.month, weekName: w.week });
-                });
-            });
-        });
+        curriculumData.forEach(m => m.weeks.forEach(w => w.days.forEach(d => allDays.push({ ...d, monthName: m.month, weekName: w.week }))));
+
+        function saveState() {
+            localStorage.setItem('dataforge_state', JSON.stringify(state));
+        }
 
         window.onload = function() {
+            if (window.location.protocol === 'file:') {
+                document.getElementById('localFileNotice').classList.remove('hidden');
+            }
+            updateStatsUI();
+            renderNotes();
             renderSidebar();
-            loadDay(0);
+            loadDay(state.currentDayIndex);
             initPyodideEngine();
         };
+
+        function updateStatsUI() {
+            document.getElementById('headerStreak').innerText = state.streak + (state.streak === 1 ? ' Day' : ' Days');
+            document.getElementById('headerXP').innerText = state.xp + ' XP';
+            if (state.xp >= 500) document.getElementById('headerLevel').innerText = 'Junior Data Analyst';
+            else if (state.xp >= 200) document.getElementById('headerLevel').innerText = 'Python Builder';
+            else document.getElementById('headerLevel').innerText = 'Beginner Initiate';
+        }
 
         function renderSidebar() {
             const container = document.getElementById('sidebarMonths');
@@ -377,7 +343,7 @@ print(f"High-value transactions count: {len(high_value)}")
                     w.days.forEach(d => {
                         const globalIdx = allDays.findIndex(item => item.day === d.day);
                         const btn = document.createElement('button');
-                        btn.className = `w-full text-left text-xs px-2.5 py-1.5 rounded-lg transition flex items-center justify-between ${globalIdx === currentDayIndex ? 'bg-matrix-950 text-matrix-400 border border-matrix-800 font-bold' : 'text-gray-400 hover:bg-gray-800 hover:text-white'}`;
+                        btn.className = `w-full text-left text-xs px-2.5 py-1.5 rounded-lg transition flex items-center justify-between ${globalIdx === state.currentDayIndex ? 'bg-matrix-950 text-matrix-400 border border-matrix-800 font-bold' : 'text-gray-400 hover:bg-gray-800 hover:text-white'}`;
                         btn.innerHTML = `<span>Day ${d.day}: ${d.title.substring(0, 20)}...</span> <i class="fa-solid fa-chevron-right text-[9px] opacity-60"></i>`;
                         btn.onclick = () => loadDay(globalIdx);
                         daysList.appendChild(btn);
@@ -390,15 +356,18 @@ print(f"High-value transactions count: {len(high_value)}")
         }
 
         function loadDay(idx) {
-            currentDayIndex = idx;
+            state.currentDayIndex = idx;
+            saveState();
             const dayObj = allDays[idx];
             if (!dayObj) return;
             document.getElementById('currentDayBadge').innerText = `DAY ${dayObj.day} OF 168`;
             document.getElementById('currentMonthBadge').innerText = dayObj.monthName + ' // ' + dayObj.weekName;
             document.getElementById('currentDayTitle').innerText = dayObj.title;
             document.getElementById('currentDayDesc').innerText = dayObj.desc;
-            document.getElementById('lessonVideoEmbed').src = `https://www.youtube.com/embed/${dayObj.videoId}`;
-            document.getElementById('videoExternalLink').href = `https://www.youtube.com/watch?v=${dayObj.videoId}`;
+            const watchUrl = `https://www.youtube.com/watch?v=${dayObj.videoId}`;
+            document.getElementById('lessonVideoEmbed').src = `https://www.youtube-nocookie.com/embed/${dayObj.videoId}?rel=0`;
+            document.getElementById('videoExternalLink').href = watchUrl;
+            document.getElementById('fallbackNoticeLink').href = watchUrl;
             document.getElementById('exercisePromptText').innerText = dayObj.exercise;
             document.getElementById('exerciseStarterCode').innerText = dayObj.starter;
             renderSidebar();
@@ -414,18 +383,14 @@ print(f"High-value transactions count: {len(high_value)}")
         }
 
         function completeDay() {
-            streak++;
-            xp += 20;
-            document.getElementById('headerStreak').innerText = streak + ' Days';
-            document.getElementById('headerXP').innerText = xp + ' XP';
-            const dayObj = allDays[currentDayIndex];
-            userNotes.push(`Day ${dayObj.day}: Completed "${dayObj.title}" (+20 XP)`);
+            state.streak++;
+            state.xp += 20;
+            const dayObj = allDays[state.currentDayIndex];
+            state.userNotes.push(`Day ${dayObj.day}: Completed "${dayObj.title}" (+20 XP)`);
+            saveState();
+            updateStatsUI();
             renderNotes();
             alert(`🎉 Day ${dayObj.day} completed! +20 XP earned.`);
-        }
-
-        function closeWinModal() {
-            document.getElementById('winModal').classList.add('hidden');
         }
 
         let pyodideReady = false;
@@ -463,7 +428,7 @@ print(f"High-value transactions count: {len(high_value)}")
 
         function openPythonSandboxWithCode() {
             switchTab('toolbox');
-            document.getElementById('pythonCodeInput').value = allDays[currentDayIndex].starter;
+            document.getElementById('pythonCodeInput').value = allDays[state.currentDayIndex].starter;
         }
 
         function sendInstinctQuery() {
@@ -476,13 +441,14 @@ print(f"High-value transactions count: {len(high_value)}")
             chatMsgs.scrollTop = chatMsgs.scrollHeight;
 
             setTimeout(() => {
-                let reply = `Great query on Day ${allDays[currentDayIndex].day}! In private-sector tech roles, this builds your data pipeline efficiency.`;
+                let reply = `Great query on Day ${allDays[state.currentDayIndex].day}! In private-sector tech roles, this builds your data pipeline efficiency.`;
                 if (query.toLowerCase().includes('hint')) reply = `Hint: Check your syntax and ensure you are returning the expected data type.`;
                 chatMsgs.innerHTML += `<div class="bg-gray-800/80 p-3 rounded-xl border border-gray-700 text-gray-200 mr-6"><p class="font-semibold text-matrix-400 mb-1"><i class="fa-solid fa-robot mr-1"></i> Instinct:</p>${reply}</div>`;
                 chatMsgs.scrollTop = chatMsgs.scrollHeight;
-                userNotes.push(`Q: ${query} | A: ${reply}`);
+                state.userNotes.push(`Q: ${query} | A: ${reply}`);
+                saveState();
                 renderNotes();
-            }, 600);
+            }, 500);
         }
 
         function askInstinctQuick(text) {
@@ -492,15 +458,15 @@ print(f"High-value transactions count: {len(high_value)}")
 
         function renderNotes() {
             const container = document.getElementById('notesContainer');
-            if (userNotes.length === 0) {
+            if (state.userNotes.length === 0) {
                 container.innerHTML = '<p class="text-gray-500 italic">No notes yet.</p>';
                 return;
             }
-            container.innerHTML = userNotes.map(n => `<div class="p-2 bg-black/40 rounded border border-gray-800 text-gray-300">• ${n}</div>`).join('');
+            container.innerHTML = state.userNotes.map(n => `<div class="p-2 bg-black/40 rounded border border-gray-800 text-gray-300">• ${n}</div>`).join('');
         }
 
         function exportNotesMarkdown() {
-            const blob = new Blob([userNotes.join('\n\n')], { type: 'text/markdown' });
+            const blob = new Blob([state.userNotes.join('\n\n')], { type: 'text/markdown' });
             const a = document.createElement('a');
             a.href = URL.createObjectURL(blob);
             a.download = 'Study_Notes.md';
@@ -515,10 +481,11 @@ print(f"High-value transactions count: {len(high_value)}")
 
         function resetProgress() {
             if (confirm('Reset streak and progress?')) {
-                streak = 1; xp = 50;
-                document.getElementById('headerStreak').innerText = '1 Day';
-                document.getElementById('headerXP').innerText = '50 XP';
-                userNotes = []; renderNotes();
+                state = { currentDayIndex: 0, streak: 1, xp: 50, userNotes: [] };
+                saveState();
+                updateStatsUI();
+                renderNotes();
+                loadDay(0);
             }
         }
     </script>
