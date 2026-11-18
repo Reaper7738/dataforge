@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="referrer" content="strict-origin-when-cross-origin">
-    <title>DATAFORGE // INSTINCT OS v5.0</title>
+    <title>DATAFORGE // INSTINCT OS v5.2</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -214,7 +214,7 @@
                 <div class="w-7 h-7 rounded-lg bg-gradient-to-br from-[#0071e3] to-[#38bdf8] flex items-center justify-center text-white text-xs font-bold shadow-sm">
                     <i class="fa-solid fa-layer-group"></i>
                 </div>
-                <span class="font-bold text-xs sm:text-sm tracking-tight text-main">DATAFORGE <span class="text-appleBlue font-semibold">5.0</span></span>
+                <span class="font-bold text-xs sm:text-sm tracking-tight text-main">DATAFORGE <span class="text-appleBlue font-semibold">5.2</span></span>
             </div>
 
             <button onclick="toggleRoadmapDrawer(true)" class="sub-pill hover:bg-appleBlue/10 text-main text-xs font-medium px-3 py-1.5 rounded-full transition active:scale-95 flex items-center gap-1.5 min-h-[34px]">
@@ -323,10 +323,23 @@
                             <i class="fa-solid fa-up-right-from-square text-appleBlue text-[10px]"></i>
                             <span>Float Mini-Window</span>
                         </button>
-                        <a id="youtubeDirectAnchor" href="https://www.youtube.com/watch?v=EsDFiZPljYo" target="_blank" rel="noopener noreferrer" class="sub-pill hover:bg-red-500/10 text-main text-[11px] font-medium px-2.5 py-1.5 rounded-lg transition flex items-center gap-1">
+                        <a id="youtubeDirectAnchor" href="https://www.youtube.com/watch?v=k9TUPpGqYTo" target="_blank" rel="noopener noreferrer" class="sub-pill hover:bg-red-500/10 text-main text-[11px] font-medium px-2.5 py-1.5 rounded-lg transition flex items-center gap-1">
                             <span>YouTube ↗</span>
                         </a>
                     </div>
+                </div>
+
+                <!-- Active Instructor & Topic Badge Bar -->
+                <div class="sub-pill rounded-xl px-3 py-1.5 flex flex-wrap items-center justify-between gap-2 text-[11px]">
+                    <div class="flex items-center gap-2 min-w-0">
+                        <span class="inline-flex items-center gap-1 font-semibold text-main shrink-0">
+                            <i class="fa-solid fa-chalkboard-user text-appleBlue text-[10px]"></i>
+                            <span id="videoTeacherBadge">Corey Schafer</span>
+                        </span>
+                        <span class="text-muted">•</span>
+                        <span id="videoTopicBadge" class="font-mono text-[10px] font-semibold px-2 py-0.5 rounded-md bg-appleBlue/15 text-appleBlue truncate">Strings & Formatting</span>
+                    </div>
+                    <span id="videoTimestampBadge" class="font-mono text-[10px] text-muted shrink-0">Start: 00:00</span>
                 </div>
 
                 <!-- Custom YouTube URL Paste Bar -->
@@ -346,7 +359,7 @@
                         <iframe
                             id="ytPlayer"
                             class="w-full h-full"
-                            src="https://www.youtube.com/embed/EsDFiZPljYo?rel=0&modestbranding=1&playsinline=1"
+                            src="https://www.youtube.com/embed/k9TUPpGqYTo?start=0&rel=0"
                             title="DataForge Core Lesson Video"
                             frameborder="0"
                             referrerpolicy="strict-origin-when-cross-origin"
@@ -595,11 +608,11 @@
                     <option value="healthcare">Healthcare & Bio-Data</option>
                     <option value="finance">Finance & Quantitative Risk</option>
                     <option value="operations">Operations & Supply Chain</option>
-                    <option value="research">Open Research & Scientific Computing</option>
+                    <option value="custom">Custom Capstone</option>
                 </select>
                 <div class="relative">
                     <i class="fa-solid fa-magnifying-glass text-[11px] text-muted absolute left-3 top-1/2 -translate-y-1/2"></i>
-                    <input type="text" id="roadmapSearchInput" oninput="renderRoadmapList()" placeholder="Filter 168 days (SQL, Pandas, A/B...)" class="w-full sub-pill rounded-xl pl-8 pr-3 py-1.5 text-xs text-main placeholder:text-muted focus:outline-none focus:border-appleBlue">
+                    <input type="text" id="roadmapSearchInput" oninput="renderRoadmapList()" placeholder="Filter 168 days (Corey, Alex, SQL, Stats...)" class="w-full sub-pill rounded-xl pl-8 pr-3 py-1.5 text-xs text-main placeholder:text-muted focus:outline-none focus:border-appleBlue">
                 </div>
             </div>
 
@@ -714,7 +727,7 @@
 
     <script>
         // =========================================================================
-        // 1. DOMAIN-NEUTRAL 168-DAY CURRICULUM & SPECIALIZATION TRACKS
+        // 1. TOPIC-CURATED 24-WEEK (168-DAY) CURRICULUM ENGINE
         // =========================================================================
         const SPECIALIZATION_TRACKS = {
             product: {
@@ -733,148 +746,669 @@
                 name: "Operations & Supply Chain",
                 capstoneDomain: "warehouse lead-time forecasting, transit routing efficiency, and inventory stockout prevention"
             },
-            research: {
-                name: "Open Research & Scientific Computing",
-                capstoneDomain: "climate anomaly modeling, astronomical light-curve classification, and reproducible experiments"
+            custom: {
+                name: "Custom Capstone",
+                capstoneDomain: "your custom domain dataset, reproducible feature pipeline, and executive decision dashboard"
             }
         };
 
-        const VERIFIED_VIDEOS = {
-            python: "EsDFiZPljYo",
-            pythonFull: "rfscVS0vtbw",
-            sql: "HXV3zeQKqGY",
-            numpy: "r-uOLxNrNk8",
-            pandas: "vmEHCJofslg",
-            stats: "ua-CiDNNj30",
-            ml: "7eh4d6sabA0"
-        };
+        const MONTH_META = [
+            { month: 1, title: "Python Foundations", tag: "#Python", leadTeacher: "Corey Schafer" },
+            { month: 2, title: "SQL & Relational Databases", tag: "#SQL", leadTeacher: "Alex The Analyst" },
+            { month: 3, title: "NumPy & Pandas Data Manipulation", tag: "#Python", leadTeacher: "Keith Galli & Corey Schafer" },
+            { month: 4, title: "Statistics, Probability & EDA", tag: "#Stats", leadTeacher: "StatQuest • Josh Starmer" },
+            { month: 5, title: "Machine Learning & Modeling", tag: "#ML", leadTeacher: "StatQuest • Josh Starmer" },
+            { month: 6, title: "Portfolio Apps & Interview Mastery", tag: "#Career", leadTeacher: "Data Professor & freeCodeCamp" }
+        ];
 
-        const MONTH_BLUEPRINTS = [
+        // 24 Distinct Weekly Tracks (7 days each = 168 unique topic-matched lessons)
+        const WEEKLY_CURRICULUM = [
+            // ==================== MONTH 1: PYTHON FOUNDATIONS (COREY SCHAFER) ====================
             {
-                month: 1,
-                title: "Python Foundations",
-                tag: "#Python",
-                videoId: VERIFIED_VIDEOS.python,
-                topics: [
-                    { title: "Variables, Types & Sensor Telemetry", task: "Read weather.csv or define a list of Celsius temperatures [22.0, 36.5, 19.4, 38.1] and print the temperatures converted to Fahrenheit.", hint: "Use F = (C * 9 / 5) + 32 inside a list comprehension and print the result.", keywords: ["32", "print"] },
-                    { title: "Conditional Logic & Threshold Alerts", task: "Classify a sensor reading (e.g. temp = 37.8) into 'Normal', 'Elevated', or 'Critical' using if/elif/else and print the label.", hint: "Check if temp >= 37.5 for 'Critical', >= 30.0 for 'Elevated', else 'Normal'.", keywords: ["if", "else", "print"] },
-                    { title: "Lists, Slicing & Top-K Filtering", task: "Given readings = [14, 88, 42, 95, 63, 71], sort descending and print the top 3 highest values.", hint: "Use sorted(readings, reverse=True)[:3] and print it.", keywords: ["sorted", "print"] },
-                    { title: "Dictionaries & Structured Records", task: "Create a dictionary representing a weather station ('id', 'city', 'avg_temp') and print its formatted summary.", hint: "Define station = {'id': 'ST-01', 'city': 'Pune', 'avg_temp': 26.4} and print with an f-string.", keywords: ["{", "}", "print"] },
-                    { title: "For & While Loops for Stream Processing", task: "Loop through [10, 20, 30, 40] and compute the running cumulative sum, printing the final total.", hint: "Initialize total = 0, add each item in a for loop, then print(total).", keywords: ["for", "print"] },
-                    { title: "List & Dict Comprehensions", task: "Use a list comprehension to square only the even numbers from range(1, 11) and print the list.", hint: "[x**2 for x in range(1, 11) if x % 2 == 0]", keywords: ["for", "if", "print"] },
-                    { title: "Week 1 Capstone: Telemetry Log Summarizer", task: "Write a Python script that reads 'weather.csv' and prints the total number of rows and average temperature.", hint: "Import csv, read weather.csv with csv.DictReader, and average the float(row['temp_c']) values.", keywords: ["weather.csv", "print"] }
+                week: 1, month: 1, days: [
+                    { title: "Strings & Text Formatting", topicBadge: "Strings & Formatting", videoId: "k9TUPpGqYTo", start: 0, teacher: "Corey Schafer",
+                      task: "Clean raw station label raw = '  station_01: pune_north  ' by stripping whitespace, replacing '_' with ' ', converting to title case, and printing it.",
+                      hint: "Use raw.strip().replace('_', ' ').title() and print the formatted string.", keywords: ["strip", "replace", "print"] },
+                    { title: "Lists, Tuples & Sets", topicBadge: "Lists, Tuples & Sets", videoId: "R-HLU9Fl5ug", start: 0, teacher: "Corey Schafer",
+                      task: "Given sensor_ids = ['S1', 'S2', 'S1', 'S3', 'S2'], deduplicate them using a set, sort ascending into a list, and print the unique IDs.",
+                      hint: "Convert to set(sensor_ids), wrap with sorted(...), and print the result.", keywords: ["set", "sorted", "print"] },
+                    { title: "Dictionaries & Key-Value Lookups", topicBadge: "Dictionaries", videoId: "2Z4Hl_2NeBM", start: 0, teacher: "Corey Schafer",
+                      task: "Create a dictionary movie = {'title': 'Inception', 'year': 2010, 'rating': 8.8}, update 'rating' to 9.0, and print movie.get('genre', 'Sci-Fi').",
+                      hint: "Update movie['rating'] = 9.0 and use .get('genre', 'Sci-Fi') inside print().", keywords: ["get", "print"] },
+                    { title: "Conditionals & Booleans", topicBadge: "Conditionals & Booleans", videoId: "DZwmZ8Usvnk", start: 0, teacher: "Corey Schafer",
+                      task: "Write an if/elif/else block for temp_c = 34.8 that prints 'Heat Alert' if >= 33, 'Warm' if >= 25, or 'Mild' otherwise.",
+                      hint: "Set temp_c = 34.8 and check temp_c >= 33 first before >= 25.", keywords: ["if", "elif", "else", "print"] },
+                    { title: "For & While Loops", topicBadge: "For & While Loops", videoId: "6iF8Xb7Z3wQ", start: 0, teacher: "Corey Schafer",
+                      task: "Loop over temps = [31.2, 26.4, 24.1, 34.8, 16.5] and print each temperature above 25.0 along with the count of warm days.",
+                      hint: "Initialize warm_count = 0, iterate with for t in temps:, increment when t > 25.0, and print.", keywords: ["for", "if", "print"] },
+                    { title: "Functions & Return Values", topicBadge: "Functions", videoId: "9Os0o3wzS_I", start: 0, teacher: "Corey Schafer",
+                      task: "Define a function c_to_f(celsius) that returns round((celsius * 9/5) + 32, 1) and print c_to_f(26.4).",
+                      hint: "Use def c_to_f(celsius): return round((celsius * 9/5) + 32, 1) and print(c_to_f(26.4)).", keywords: ["def", "return", "print"] },
+                    { title: "Week 1 Capstone: Sensor Log Parser", topicBadge: "Week 1 Capstone", videoId: "9Os0o3wzS_I", start: 600, teacher: "Corey Schafer",
+                      task: "Read 'weather.csv' with Python's csv module and print the city name with the highest recorded temp_c.",
+                      hint: "Open 'weather.csv', iterate with csv.DictReader, track max float(row['temp_c']), and print the winning city.", keywords: ["weather.csv", "print"] }
                 ]
             },
             {
-                month: 2,
-                title: "Relational SQL & Data Modeling",
-                tag: "#SQL",
-                videoId: VERIFIED_VIDEOS.sql,
-                topics: [
-                    { title: "SELECT, WHERE & Logical Filtering", task: "Switch to SQLite SQL mode and select all rows from 'movies' where rating >= 8.5.", hint: "SELECT * FROM movies WHERE rating >= 8.5;", keywords: ["select", "movies", "where"] },
-                    { title: "ORDER BY, LIMIT & Distinct Categories", task: "Query 'movies' to list the top 3 highest-rated films ordered by rating descending.", hint: "SELECT title, genre, rating FROM movies ORDER BY rating DESC LIMIT 3;", keywords: ["select", "order by", "limit"] },
-                    { title: "Aggregations: COUNT, AVG, MIN & MAX", task: "Calculate the average temperature and maximum humidity across all rows in the 'weather' table.", hint: "SELECT ROUND(AVG(temp_c), 2) AS avg_temp, MAX(humidity) AS max_hum FROM weather;", keywords: ["select", "avg", "weather"] },
-                    { title: "GROUP BY & HAVING Clauses", task: "Group 'movies' by genre and return genres having an average rating above 8.0.", hint: "SELECT genre, ROUND(AVG(rating), 2) FROM movies GROUP BY genre HAVING AVG(rating) > 8.0;", keywords: ["group by", "having", "movies"] },
-                    { title: "INNER & LEFT JOINs Across Tables", task: "Join 'weather' and 'sensors' on station_id to display city, temp_c, and battery_pct.", hint: "SELECT w.city, w.temp_c, s.battery_pct FROM weather w JOIN sensors s ON w.station_id = s.station_id;", keywords: ["join", "weather", "sensors"] },
-                    { title: "CASE WHEN Conditional Columns", task: "Query 'sensors' and label each sensor as 'Low Battery' when battery_pct < 50 else 'Healthy'.", hint: "SELECT station_id, CASE WHEN battery_pct < 50 THEN 'Low Battery' ELSE 'Healthy' END AS status FROM sensors;", keywords: ["case", "when", "sensors"] },
-                    { title: "Week Capstone: Multi-Table Diagnostic Query", task: "Join 'weather' and 'sensors' to find stations where temp_c > 28 and battery_pct < 80.", hint: "SELECT w.city, w.temp_c, s.battery_pct FROM weather w JOIN sensors s ON w.station_id = s.station_id WHERE w.temp_c > 28 AND s.battery_pct < 80;", keywords: ["join", "where"] }
+                week: 2, month: 1, days: [
+                    { title: "List Comprehensions for Data Filtering", topicBadge: "Comprehensions", videoId: "3dt4OGnU5sM", start: 0, teacher: "Corey Schafer",
+                      task: "Use a single list comprehension on ratings = [8.8, 7.2, 8.5, 6.9, 8.7] to extract ratings >= 8.5 and print them.",
+                      hint: "top = [r for r in ratings if r >= 8.5]; print(top)", keywords: ["for", "if", "print"] },
+                    { title: "Nested Comprehensions & Matrix Flattening", topicBadge: "Nested Comprehensions", videoId: "3dt4OGnU5sM", start: 420, teacher: "Corey Schafer",
+                      task: "Flatten grid = [[1, 2, 3], [4, 5, 6]] into a single 1D list [1, 2, 3, 4, 5, 6] using a list comprehension and print it.",
+                      hint: "flat = [num for row in grid for num in row]; print(flat)", keywords: ["for", "print"] },
+                    { title: "Dictionary & Set Comprehensions", topicBadge: "Dict Comprehensions", videoId: "3dt4OGnU5sM", start: 780, teacher: "Corey Schafer",
+                      task: "Build a dictionary mapping cities = ['Mumbai', 'Pune', 'Delhi'] to their character lengths using a dict comprehension and print it.",
+                      hint: "lengths = {c: len(c) for c in cities}; print(lengths)", keywords: ["len", "for", "print"] },
+                    { title: "Generator Expressions & Memory Streams", topicBadge: "Generators", videoId: "3dt4OGnU5sM", start: 1080, teacher: "Corey Schafer",
+                      task: "Compute the sum of squares of even numbers from 1 to 100 using a generator expression inside sum(...) and print it.",
+                      hint: "print(sum(x*x for x in range(1, 101) if x % 2 == 0))", keywords: ["sum", "for", "print"] },
+                    { title: "String Slicing & Telemetry Parsing", topicBadge: "String Slicing", videoId: "k9TUPpGqYTo", start: 480, teacher: "Corey Schafer",
+                      task: "Given code = '2026-11-18_ST04_TEMP34.8', slice or split out the date, station ID, and numeric temperature, then print them.",
+                      hint: "parts = code.split('_'); print(parts[0], parts[1], float(parts[2][4:]))", keywords: ["split", "print"] },
+                    { title: "Sorting Tuples & Custom Key Functions", topicBadge: "Sorting & Tuples", videoId: "R-HLU9Fl5ug", start: 900, teacher: "Corey Schafer",
+                      task: "Sort stations = [('ST-01', 31.2), ('ST-02', 26.4), ('ST-05', 16.5)] by temperature ascending using sorted() and print.",
+                      hint: "print(sorted(stations, key=lambda x: x[1]))", keywords: ["sorted", "lambda", "print"] },
+                    { title: "Week 2 Capstone: Movie Catalog Normalizer", topicBadge: "Week 2 Capstone", videoId: "3dt4OGnU5sM", start: 0, teacher: "Corey Schafer",
+                      task: "Read 'movies.csv' and build a dict mapping each movie title to its release decade (e.g. 2010) using a comprehension, then print it.",
+                      hint: "Use (int(row['year']) // 10) * 10 inside a dict comprehension over csv.DictReader(open('movies.csv')).", keywords: ["movies.csv", "print"] }
                 ]
             },
             {
-                month: 3,
-                title: "NumPy, Pandas & Data Wrangling",
-                tag: "#Python",
-                videoId: VERIFIED_VIDEOS.pandas,
-                topics: [
-                    { title: "NumPy Arrays & Vectorized Math", task: "Import numpy as np, create an array of [12, 18, 25, 31], and print its mean and standard deviation.", hint: "arr = np.array([12, 18, 25, 31]); print(arr.mean(), arr.std())", keywords: ["numpy", "print"] },
-                    { title: "Pandas DataFrames & CSV Inspection", task: "Import pandas as pd, load 'movies.csv', and print df.shape and df.head(3).", hint: "df = pd.read_csv('movies.csv'); print(df.shape); print(df.head(3))", keywords: ["pandas", "movies.csv", "print"] },
-                    { title: "Boolean Indexing & Multi-Condition Filtering", task: "Filter 'movies.csv' for Sci-Fi or Drama movies released after 2010 and print their titles.", hint: "df[(df['year'] > 2010) & (df['genre'].isin(['Sci-Fi', 'Drama']))]['title']", keywords: ["movies.csv", "print"] },
-                    { title: "Handling Missing Values & Imputation", task: "Create a Pandas Series with a None/NaN value and fill missing entries using the series median.", hint: "s = pd.Series([10.0, None, 20.0, 30.0]); print(s.fillna(s.median()))", keywords: ["fillna", "median"] },
-                    { title: "GroupBy Split-Apply-Combine", task: "Group 'movies.csv' by 'genre' and print the mean rating per genre.", hint: "df = pd.read_csv('movies.csv'); print(df.groupby('genre')['rating'].mean())", keywords: ["groupby", "movies.csv"] },
-                    { title: "Merging & Joining DataFrames", task: "Merge 'weather.csv' and 'sensors.csv' on 'station_id' using pd.merge and print the combined table.", hint: "w = pd.read_csv('weather.csv'); s = pd.read_csv('sensors.csv'); print(pd.merge(w, s, on='station_id'))", keywords: ["merge", "station_id"] },
-                    { title: "Week Capstone: Automated Data Quality Audit", task: "Load 'sensors.csv', check null counts with .isna().sum(), and print stations needing calibration.", hint: "df = pd.read_csv('sensors.csv'); print(df.isna().sum()); print(df[df['calibrated'] == 0])", keywords: ["sensors.csv", "print"] }
+                week: 3, month: 1, days: [
+                    { title: "OOP Classes & Instances for Data Entities", topicBadge: "OOP Classes", videoId: "ZDa-Z5JzLYM", start: 0, teacher: "Corey Schafer",
+                      task: "Create a class SensorNode with attributes station_id and battery_pct, instantiate two nodes, and print their IDs.",
+                      hint: "Define class SensorNode with __init__(self, station_id, battery_pct) and print node1.station_id.", keywords: ["class", "def", "print"] },
+                    { title: "OOP Constructors & Computed Attributes", topicBadge: "OOP Constructors", videoId: "ZDa-Z5JzLYM", start: 360, teacher: "Corey Schafer",
+                      task: "Add an is_healthy attribute in SensorNode.__init__ set to battery_pct >= 50 and print it for battery_pct = 44.",
+                      hint: "self.is_healthy = battery_pct >= 50", keywords: ["class", "__init__", "print"] },
+                    { title: "Custom Instance Methods & State Updates", topicBadge: "OOP Methods", videoId: "ZDa-Z5JzLYM", start: 660, teacher: "Corey Schafer",
+                      task: "Add a recharge(self, amount) method to SensorNode that caps battery_pct at 100 and print the updated value.",
+                      hint: "self.battery_pct = min(100, self.battery_pct + amount)", keywords: ["class", "def", "min", "print"] },
+                    { title: "Dictionary-Backed Record Schemas", topicBadge: "Dict Schemas", videoId: "2Z4Hl_2NeBM", start: 540, teacher: "Corey Schafer",
+                      task: "Convert a list of tuples [('ST-01', 92), ('ST-02', 44)] into a lookup dict and print the battery for 'ST-02'.",
+                      hint: "lookup = dict([('ST-01', 92), ('ST-02', 44)]); print(lookup['ST-02'])", keywords: ["dict", "print"] },
+                    { title: "Defensive Conditionals & Guard Clauses", topicBadge: "Guard Clauses", videoId: "DZwmZ8Usvnk", start: 480, teacher: "Corey Schafer",
+                      task: "Write a function safe_ratio(num, den) that returns None if den == 0 else round(num / den, 3), and print safe_ratio(10, 0).",
+                      hint: "if den == 0: return None", keywords: ["def", "if", "return", "print"] },
+                    { title: "Iterative Batch Aggregators", topicBadge: "Batch Loops", videoId: "6iF8Xb7Z3wQ", start: 420, teacher: "Corey Schafer",
+                      task: "Group ratings = [('Sci-Fi', 8.8), ('Drama', 8.5), ('Sci-Fi', 8.7)] into a dict of lists by genre and print it.",
+                      hint: "Loop over pairs and use grouped.setdefault(genre, []).append(score).", keywords: ["for", "append", "print"] },
+                    { title: "Week 3 Capstone: WeatherStation Class Suite", topicBadge: "Week 3 Capstone", videoId: "ZDa-Z5JzLYM", start: 0, teacher: "Corey Schafer",
+                      task: "Create a WeatherStation class with a summary() method returning 'City: Temp°C', load one row from 'weather.csv', and print summary().",
+                      hint: "Instantiate WeatherStation(row['city'], row['temp_c']) and print(ws.summary()).", keywords: ["class", "weather.csv", "print"] }
                 ]
             },
             {
-                month: 4,
-                title: "Statistics, Probability & EDA",
-                tag: "#Stats",
-                videoId: VERIFIED_VIDEOS.stats,
-                topics: [
-                    { title: "Central Tendency & Skewness", task: "Compare mean vs median on [15, 16, 15, 17, 16, 95] using NumPy and print both values.", hint: "import numpy as np; x = [15, 16, 15, 17, 16, 95]; print('Mean:', np.mean(x), 'Median:', np.median(x))", keywords: ["mean", "median"] },
-                    { title: "Variance, IQR & Outlier Detection", task: "Compute the 25th and 75th percentiles (IQR) of [10, 12, 14, 15, 18, 22, 45] using np.percentile.", hint: "q25, q75 = np.percentile(data, [25, 75]); print('IQR:', q75 - q25)", keywords: ["percentile", "print"] },
-                    { title: "Probability Distributions & Z-Scores", task: "Standardize [20, 25, 30, 35, 40] into Z-scores (x - mean) / std and print the standardized array.", hint: "arr = np.array([20, 25, 30, 35, 40]); print((arr - arr.mean()) / arr.std())", keywords: ["mean", "std"] },
-                    { title: "Correlation vs Causation", task: "Load 'weather.csv' in Pandas and print the correlation matrix between temp_c and humidity.", hint: "df = pd.read_csv('weather.csv'); print(df[['temp_c', 'humidity']].corr())", keywords: ["corr", "weather.csv"] },
-                    { title: "Confidence Intervals & Sampling", task: "Simulate 500 bootstrap sample means from [12, 15, 14, 18, 19, 13, 16] and print the 95% interval.", hint: "Use np.random.choice(data, size=len(data), replace=True) in a loop and np.percentile(..., [2.5, 97.5]).", keywords: ["percentile", "print"] },
-                    { title: "Hypothesis Testing & P-Values", task: "Compare two sample group means and print their absolute difference and pooled standard error.", hint: "Compute np.mean(g2) - np.mean(g1) and print the lift.", keywords: ["mean", "print"] },
-                    { title: "Week Capstone: Structured EDA Report", task: "Print summary statistics (.describe()) for 'movies.csv' and identify the highest-rated decade.", hint: "df = pd.read_csv('movies.csv'); print(df.describe())", keywords: ["describe", "movies.csv"] }
+                week: 4, month: 1, days: [
+                    { title: "String Cleaning & Delimiter Normalization", topicBadge: "Text Cleaning", videoId: "k9TUPpGqYTo", start: 840, teacher: "Corey Schafer",
+                      task: "Parse messy CSV line ' Inception | 2010 | 8.8 ' into clean stripped fields and print a formatted f-string.",
+                      hint: "title, year, rating = [p.strip() for p in line.split('|')]; print(f'{title} ({year}): {rating}')", keywords: ["split", "strip", "print"] },
+                    { title: "Set Operations for Schema Diffs", topicBadge: "Set Operations", videoId: "R-HLU9Fl5ug", start: 1320, teacher: "Corey Schafer",
+                      task: "Given required = {'id', 'temp', 'humidity'} and actual = {'id', 'temp'}, print the missing columns using set difference.",
+                      hint: "print(required - actual)", keywords: ["-", "print"] },
+                    { title: "Safe Dictionary Lookups & Merging", topicBadge: "Safe Lookups", videoId: "2Z4Hl_2NeBM", start: 780, teacher: "Corey Schafer",
+                      task: "Merge defaults = {'retries': 3, 'timeout': 10} with overrides = {'timeout': 30} using {**defaults, **overrides} and print.",
+                      hint: "config = {**defaults, **overrides}; print(config)", keywords: ["**", "print"] },
+                    { title: "Compound Boolean Validation Rules", topicBadge: "Validation Rules", videoId: "DZwmZ8Usvnk", start: 720, teacher: "Corey Schafer",
+                      task: "Check if a sensor reading (temp=28.5, battery=75, calibrated=True) passes all three quality gates and print True/False.",
+                      hint: "is_valid = (-40 <= temp <= 60) and (battery >= 50) and calibrated; print(is_valid)", keywords: ["and", "print"] },
+                    { title: "Enumerate & Zip Parallel Iteration", topicBadge: "Zip & Enumerate", videoId: "6iF8Xb7Z3wQ", start: 660, teacher: "Corey Schafer",
+                      task: "Pair cities = ['Mumbai', 'Pune'] with temps = [31.2, 26.4] using zip() and print numbered lines with enumerate().",
+                      hint: "for idx, (c, t) in enumerate(zip(cities, temps), 1): print(idx, c, t)", keywords: ["enumerate", "zip", "print"] },
+                    { title: "Modular Pipeline Functions & Args", topicBadge: "Modular Functions", videoId: "9Os0o3wzS_I", start: 900, teacher: "Corey Schafer",
+                      task: "Write a function summarize_values(vals) returning a dict with 'min', 'max', and 'avg' rounded to 2 decimals, and print it.",
+                      hint: "return {'min': min(vals), 'max': max(vals), 'avg': round(sum(vals)/len(vals), 2)}", keywords: ["def", "min", "max", "print"] },
+                    { title: "Month 1 Capstone: Telemetry Quality Pipeline", topicBadge: "Month 1 Capstone", videoId: "9Os0o3wzS_I", start: 0, teacher: "Corey Schafer",
+                      task: "Read 'sensors.csv', count how many stations have calibrated == '1' and battery_pct >= 80, and print the count.",
+                      hint: "Use csv.DictReader(open('sensors.csv')) and count rows matching both conditions.", keywords: ["sensors.csv", "print"] }
+                ]
+            },
+
+            // ==================== MONTH 2: SQL & RELATIONAL DATABASES (ALEX THE ANALYST) ====================
+            {
+                week: 5, month: 2, days: [
+                    { title: "Database Tables & Schema Creation", topicBadge: "DDL & Schemas", videoId: "RSlqWnP-Dy8", start: 0, teacher: "Alex The Analyst",
+                      task: "Switch to SQLite SQL mode, create a temporary table station_notes (id INT, note TEXT), insert 1 row, and SELECT * FROM station_notes.",
+                      hint: "CREATE TEMP TABLE station_notes (id INT, note TEXT); INSERT INTO station_notes VALUES (1, 'Calibrated'); SELECT * FROM station_notes;", keywords: ["create", "insert", "select"] },
+                    { title: "SELECT & FROM Queries", topicBadge: "SELECT & FROM", videoId: "PyYgERKq25I", start: 0, teacher: "Alex The Analyst",
+                      task: "In SQLite SQL mode, select only the title, genre, and rating columns from the 'movies' table.",
+                      hint: "SELECT title, genre, rating FROM movies;", keywords: ["select", "from", "movies"] },
+                    { title: "WHERE Filtering & Comparison Operators", topicBadge: "WHERE Filtering", videoId: "A9TOuDZTPDU", start: 0, teacher: "Alex The Analyst",
+                      task: "Query 'movies' to return all Sci-Fi films released after 2010 with rating >= 8.0.",
+                      hint: "SELECT * FROM movies WHERE genre = 'Sci-Fi' AND year > 2010 AND rating >= 8.0;", keywords: ["select", "where", "movies"] },
+                    { title: "GROUP BY & ORDER BY Aggregations", topicBadge: "GROUP BY & ORDER BY", videoId: "LXwfzIRD-Ds", start: 0, teacher: "Alex The Analyst",
+                      task: "Group 'movies' by genre, compute COUNT(*) and ROUND(AVG(rating), 2), and ORDER BY avg rating descending.",
+                      hint: "SELECT genre, COUNT(*) AS total, ROUND(AVG(rating), 2) AS avg_rating FROM movies GROUP BY genre ORDER BY avg_rating DESC;", keywords: ["group by", "order by", "movies"] },
+                    { title: "INNER & LEFT JOINs", topicBadge: "SQL JOINs", videoId: "lXQzD09BOH0", start: 0, teacher: "Alex The Analyst",
+                      task: "INNER JOIN 'weather' and 'sensors' on station_id to display city, temp_c, and battery_pct.",
+                      hint: "SELECT w.city, w.temp_c, s.battery_pct FROM weather w INNER JOIN sensors s ON w.station_id = s.station_id;", keywords: ["join", "weather", "sensors"] },
+                    { title: "Window Functions OVER & PARTITION BY", topicBadge: "Window Functions", videoId: "7NBt0V8ebGk", start: 0, teacher: "Alex The Analyst",
+                      task: "Query 'movies' using AVG(rating) OVER (PARTITION BY genre) alongside title and rating.",
+                      hint: "SELECT title, genre, rating, ROUND(AVG(rating) OVER (PARTITION BY genre), 2) AS genre_avg FROM movies;", keywords: ["over", "partition by", "movies"] },
+                    { title: "PostgreSQL & SQLite Window Analytics", topicBadge: "Window Analytics", videoId: "wp8f2ShK9Ro", start: 0, teacher: "Alex The Analyst",
+                      task: "Use ROW_NUMBER() OVER (PARTITION BY genre ORDER BY rating DESC) on 'movies' to rank films within each genre.",
+                      hint: "SELECT title, genre, rating, ROW_NUMBER() OVER (PARTITION BY genre ORDER BY rating DESC) AS rn FROM movies;", keywords: ["row_number", "over", "movies"] }
                 ]
             },
             {
-                month: 5,
-                title: "Supervised Machine Learning",
-                tag: "#ML",
-                videoId: VERIFIED_VIDEOS.ml,
-                topics: [
-                    { title: "Train/Test Splits & Leakage Prevention", task: "Split an index list range(100) into 80 train items and 20 test items without overlap and print their lengths.", hint: "train, test = list(range(80)), list(range(80, 100)); print(len(train), len(test))", keywords: ["len", "print"] },
-                    { title: "Linear Regression & Residual Error", task: "Compute Mean Absolute Error (MAE) between y_true = [10, 20, 30] and y_pred = [12, 19, 33].", hint: "mae = sum(abs(t - p) for t, p in zip(y_true, y_pred)) / len(y_true); print(round(mae, 2))", keywords: ["abs", "print"] },
-                    { title: "Logistic Regression & Sigmoid Probabilities", task: "Implement the sigmoid function 1 / (1 + math.exp(-z)) for z = 1.5 and print the probability.", hint: "import math; print(round(1 / (1 + math.exp(-1.5)), 4))", keywords: ["exp", "print"] },
-                    { title: "Precision, Recall & F1-Score", task: "Given TP=42, FP=8, FN=10, compute and print Precision, Recall, and F1-score.", hint: "prec = 42/(42+8); rec = 42/(42+10); f1 = 2*prec*rec/(prec+rec); print(round(f1, 3))", keywords: ["print"] },
-                    { title: "Decision Trees & Feature Splits", task: "Write a clean threshold rule splitting samples on feature > 0.65 and print class counts.", hint: "preds = [1 if x > 0.65 else 0 for x in [0.2, 0.8, 0.7, 0.4]]; print(preds)", keywords: ["if", "print"] },
-                    { title: "Random Forests & Cross-Validation", task: "Average 5 cross-validation fold scores [0.81, 0.84, 0.79, 0.85, 0.83] and print mean ± std.", hint: "import numpy as np; s = [0.81, 0.84, 0.79, 0.85, 0.83]; print(round(np.mean(s), 3), round(np.std(s), 3))", keywords: ["mean", "print"] },
-                    { title: "Week Capstone: Track Baseline Model", task: "Build a clean evaluation summary printing model accuracy, precision, and deployment readiness (>= 0.80).", hint: "Define accuracy = 0.86, precision = 0.84, and print('Ready:', accuracy >= 0.80 and precision >= 0.80).", keywords: ["print"] }
+                week: 6, month: 2, days: [
+                    { title: "HAVING vs WHERE Aggregate Filtering", topicBadge: "HAVING vs WHERE", videoId: "OT1RErkfLNQ", start: 2658, teacher: "Alex The Analyst",
+                      task: "Group 'movies' by genre and return only genres with COUNT(*) >= 2 using HAVING.",
+                      hint: "SELECT genre, COUNT(*) AS cnt FROM movies GROUP BY genre HAVING COUNT(*) >= 2;", keywords: ["group by", "having", "movies"] },
+                    { title: "LIMIT & Column Aliasing (AS)", topicBadge: "LIMIT & Aliasing", videoId: "OT1RErkfLNQ", start: 2861, teacher: "Alex The Analyst",
+                      task: "Select city AS station_city and temp_c AS celsius from 'weather' ordered by temp_c DESC LIMIT 3.",
+                      hint: "SELECT city AS station_city, temp_c AS celsius FROM weather ORDER BY temp_c DESC LIMIT 3;", keywords: ["as", "limit", "weather"] },
+                    { title: "Multi-Table JOINs & Key Matching", topicBadge: "Multi-Table JOINs", videoId: "OT1RErkfLNQ", start: 3070, teacher: "Alex The Analyst",
+                      task: "Join 'weather' and 'sensors' on station_id and filter for calibrated = 1 stations ordered by humidity DESC.",
+                      hint: "SELECT w.city, w.humidity, s.battery_pct FROM weather w JOIN sensors s ON w.station_id = s.station_id WHERE s.calibrated = 1 ORDER BY w.humidity DESC;", keywords: ["join", "where", "calibrated"] },
+                    { title: "UNION & UNION ALL Result Stacking", topicBadge: "UNIONs", videoId: "OT1RErkfLNQ", start: 4084, teacher: "Alex The Analyst",
+                      task: "Use UNION to combine station_ids from 'weather' where temp_c > 30 with station_ids from 'sensors' where battery_pct < 50.",
+                      hint: "SELECT station_id FROM weather WHERE temp_c > 30 UNION SELECT station_id FROM sensors WHERE battery_pct < 50;", keywords: ["union", "select"] },
+                    { title: "SQL String Functions (TRIM, UPPER, SUBSTR)", topicBadge: "SQL Strings", videoId: "OT1RErkfLNQ", start: 4510, teacher: "Alex The Analyst",
+                      task: "Select UPPER(city) AS city_upper and SUBSTR(station_id, 4, 2) AS code from 'weather'.",
+                      hint: "SELECT UPPER(city) AS city_upper, SUBSTR(station_id, 4, 2) AS code FROM weather;", keywords: ["upper", "substr", "weather"] },
+                    { title: "CASE Statements & Conditional Bucketing", topicBadge: "CASE Statements", videoId: "OT1RErkfLNQ", start: 5199, teacher: "Alex The Analyst",
+                      task: "Query 'weather' with a CASE WHEN column labeling temp_c >= 30 as 'Hot', >= 22 as 'Mild', else 'Cool'.",
+                      hint: "SELECT city, temp_c, CASE WHEN temp_c >= 30 THEN 'Hot' WHEN temp_c >= 22 THEN 'Mild' ELSE 'Cool' END AS climate FROM weather;", keywords: ["case", "when", "then", "weather"] },
+                    { title: "Week 6 Capstone: Multi-Table Diagnostic Report", topicBadge: "Week 6 Capstone", videoId: "OT1RErkfLNQ", start: 3070, teacher: "Alex The Analyst",
+                      task: "Join 'weather' and 'sensors' with a CASE status column ('Action Needed' if calibrated = 0 OR battery_pct < 50 else 'OK').",
+                      hint: "SELECT w.city, s.battery_pct, s.calibrated, CASE WHEN s.calibrated = 0 OR s.battery_pct < 50 THEN 'Action Needed' ELSE 'OK' END AS health FROM weather w JOIN sensors s ON w.station_id = s.station_id;", keywords: ["join", "case", "when"] }
                 ]
             },
             {
-                month: 6,
-                title: "Capstone & Career Readiness",
-                tag: "#Career",
-                videoId: VERIFIED_VIDEOS.pythonFull,
-                topics: [
-                    { title: "Feature Engineering & Domain Signals", task: "Create a derived interaction feature from two numeric lists and print the engineered vector.", hint: "feat = [round(a * b, 2) for a, b in zip([1.2, 2.5], [3.0, 4.0])]; print(feat)", keywords: ["zip", "print"] },
-                    { title: "Hyperparameter Tuning & Regularization", task: "Select the best alpha from {'alpha_0.1': 0.82, 'alpha_1.0': 0.87, 'alpha_10': 0.84} using max().", hint: "scores = {'alpha_0.1': 0.82, 'alpha_1.0': 0.87, 'alpha_10': 0.84}; print(max(scores, key=scores.get))", keywords: ["max", "print"] },
-                    { title: "Model Explainability & Feature Importance", task: "Sort feature importances [('temp', 0.42), ('humidity', 0.18), ('pressure', 0.40)] descending and print top 2.", hint: "sorted(feats, key=lambda x: x[1], reverse=True)[:2]", keywords: ["sorted", "print"] },
-                    { title: "Reproducible Pipelines & Schema Contracts", task: "Assert that all required columns ['station_id', 'temp_c'] exist in 'weather.csv' and print 'Schema Valid'.", hint: "df = pd.read_csv('weather.csv'); assert {'station_id', 'temp_c'}.issubset(df.columns); print('Schema Valid')", keywords: ["weather.csv", "print"] },
-                    { title: "Executive Storytelling & Metric Framing", task: "Format a clean markdown summary string reporting baseline vs tuned model lift (+6.4%) and print it.", hint: "print('## Model Lift Report\\n- Baseline: 79.2%\\n- Tuned: 85.6% (+6.4%)')", keywords: ["print"] },
-                    { title: "Technical Interview Live Coding Drill", task: "Write a clean function first_unique(nums) returning the first non-repeating integer in [4, 5, 1, 2, 0, 4] and print it.", hint: "Use collections.Counter and return the first item with count == 1.", keywords: ["def", "print"] },
-                    { title: "Day 168 Graduation: Portfolio Defense", task: "Print your final 168-day graduation certificate summary with your chosen specialization track!", hint: "print('DATAFORGE 168-DAY GRADUATE — PORTFOLIO READY')", keywords: ["print"] }
+                week: 7, month: 2, days: [
+                    { title: "Subqueries in WHERE & FROM Clauses", topicBadge: "Subqueries", videoId: "OT1RErkfLNQ", start: 5750, teacher: "Alex The Analyst",
+                      task: "Select movies whose rating is strictly higher than the overall average rating using a scalar subquery.",
+                      hint: "SELECT title, rating FROM movies WHERE rating > (SELECT AVG(rating) FROM movies);", keywords: ["select", "where", "avg", "movies"] },
+                    { title: "Common Table Expressions (WITH CTEs)", topicBadge: "CTEs", videoId: "OT1RErkfLNQ", start: 6900, teacher: "Alex The Analyst",
+                      task: "Write a WITH high_rated AS (...) CTE for movies with rating >= 8.6 and select count and average year from it.",
+                      hint: "WITH high_rated AS (SELECT * FROM movies WHERE rating >= 8.6) SELECT COUNT(*), ROUND(AVG(year), 1) FROM high_rated;", keywords: ["with", "as", "select"] },
+                    { title: "ROW_NUMBER() Top-N Per Group Ranking", topicBadge: "ROW_NUMBER()", videoId: "7NBt0V8ebGk", start: 240, teacher: "Alex The Analyst",
+                      task: "Use a CTE with ROW_NUMBER() OVER (PARTITION BY genre ORDER BY rating DESC) to return only the #1 top movie per genre.",
+                      hint: "WITH ranked AS (SELECT title, genre, rating, ROW_NUMBER() OVER (PARTITION BY genre ORDER BY rating DESC) AS rn FROM movies) SELECT title, genre, rating FROM ranked WHERE rn = 1;", keywords: ["with", "row_number", "where"] },
+                    { title: "RANK() vs DENSE_RANK() Ties Handling", topicBadge: "RANK & DENSE_RANK", videoId: "wp8f2ShK9Ro", start: 300, teacher: "Alex The Analyst",
+                      task: "Compare RANK() and DENSE_RANK() ordered by rating DESC across all rows in 'movies'.",
+                      hint: "SELECT title, rating, RANK() OVER (ORDER BY rating DESC) AS rnk, DENSE_RANK() OVER (ORDER BY rating DESC) AS drnk FROM movies;", keywords: ["rank", "dense_rank", "movies"] },
+                    { title: "Running Totals & Cumulative Sums with OVER", topicBadge: "Running Totals", videoId: "wp8f2ShK9Ro", start: 600, teacher: "Alex The Analyst",
+                      task: "Compute a running cumulative sum of temp_c ordered by station_id across 'weather'.",
+                      hint: "SELECT station_id, city, temp_c, ROUND(SUM(temp_c) OVER (ORDER BY station_id), 2) AS running_temp FROM weather;", keywords: ["sum", "over", "order by", "weather"] },
+                    { title: "LEFT JOIN Audits & Null Verification", topicBadge: "LEFT JOIN Audits", videoId: "lXQzD09BOH0", start: 420, teacher: "Alex The Analyst",
+                      task: "Perform a LEFT JOIN from 'weather' to 'sensors' on station_id and display city, temp_c, and COALESCE(battery_pct, 0).",
+                      hint: "SELECT w.city, w.temp_c, COALESCE(s.battery_pct, 0) AS battery FROM weather w LEFT JOIN sensors s ON w.station_id = s.station_id;", keywords: ["left join", "weather", "sensors"] },
+                    { title: "Week 7 Capstone: CTE + Window Leaderboard", topicBadge: "Week 7 Capstone", videoId: "7NBt0V8ebGk", start: 0, teacher: "Alex The Analyst",
+                      task: "Combine a CTE and window AVG(temp_c) OVER () on 'weather' to show each city's temperature delta from the national average.",
+                      hint: "SELECT city, temp_c, ROUND(temp_c - AVG(temp_c) OVER (), 2) AS delta_from_avg FROM weather;", keywords: ["over", "weather"] }
+                ]
+            },
+            {
+                week: 8, month: 2, days: [
+                    { title: "Standardizing Text Keys in SQL", topicBadge: "SQL Text Ops", videoId: "OT1RErkfLNQ", start: 4510, teacher: "Alex The Analyst",
+                      task: "Select LOWER(genre) AS genre_key and LENGTH(title) AS title_len from 'movies' ordered by title_len DESC.",
+                      hint: "SELECT LOWER(genre) AS genre_key, LENGTH(title) AS title_len FROM movies ORDER BY title_len DESC;", keywords: ["lower", "length", "movies"] },
+                    { title: "Multi-Tier Scoring with Nested CASE", topicBadge: "CASE Scoring", videoId: "OT1RErkfLNQ", start: 5199, teacher: "Alex The Analyst",
+                      task: "Bucket 'movies' into 'Masterpiece' (>= 8.7), 'Acclaimed' (>= 8.5), or 'Notable' using CASE WHEN.",
+                      hint: "SELECT title, rating, CASE WHEN rating >= 8.7 THEN 'Masterpiece' WHEN rating >= 8.5 THEN 'Acclaimed' ELSE 'Notable' END AS tier FROM movies;", keywords: ["case", "when", "movies"] },
+                    { title: "Complex HAVING Thresholds", topicBadge: "HAVING Thresholds", videoId: "OT1RErkfLNQ", start: 2658, teacher: "Alex The Analyst",
+                      task: "Group 'movies' by genre and filter with HAVING AVG(rating) > 8.4 AND COUNT(*) >= 2.",
+                      hint: "SELECT genre, COUNT(*), ROUND(AVG(rating), 2) FROM movies GROUP BY genre HAVING AVG(rating) > 8.4 AND COUNT(*) >= 2;", keywords: ["group by", "having", "avg"] },
+                    { title: "Partitioned Deduplication Queries", topicBadge: "Window Partition", videoId: "wp8f2ShK9Ro", start: 900, teacher: "Alex The Analyst",
+                      task: "Use ROW_NUMBER() OVER (PARTITION BY calibrated ORDER BY battery_pct DESC) on 'sensors' to rank sensors within calibration state.",
+                      hint: "SELECT station_id, calibrated, battery_pct, ROW_NUMBER() OVER (PARTITION BY calibrated ORDER BY battery_pct DESC) AS rn FROM sensors;", keywords: ["partition by", "sensors"] },
+                    { title: "Executive Summary Union Reports", topicBadge: "UNION Summary", videoId: "OT1RErkfLNQ", start: 4084, teacher: "Alex The Analyst",
+                      task: "Use UNION ALL to stack two summary rows: 'Total Movies' count from movies and 'Total Stations' count from weather.",
+                      hint: "SELECT 'Total Movies' AS metric, COUNT(*) AS val FROM movies UNION ALL SELECT 'Total Stations', COUNT(*) FROM weather;", keywords: ["union all", "count"] },
+                    { title: "Analytical Schema & View Design", topicBadge: "Analytical Views", videoId: "RSlqWnP-Dy8", start: 300, teacher: "Alex The Analyst",
+                      task: "Create a TEMP VIEW v_station_health joining weather and sensors, then SELECT * FROM v_station_health.",
+                      hint: "CREATE TEMP VIEW v_station_health AS SELECT w.station_id, w.city, w.temp_c, s.battery_pct FROM weather w JOIN sensors s ON w.station_id = s.station_id; SELECT * FROM v_station_health;", keywords: ["view", "join", "select"] },
+                    { title: "Month 2 Capstone: Full SQL Warehouse Audit", topicBadge: "Month 2 Capstone", videoId: "OT1RErkfLNQ", start: 6900, teacher: "Alex The Analyst",
+                      task: "Write a CTE joining 'weather' and 'sensors' that outputs city, temp_c, battery_pct, and priority rank ordered by battery_pct ASC.",
+                      hint: "WITH audit AS (SELECT w.city, w.temp_c, s.battery_pct FROM weather w JOIN sensors s ON w.station_id = s.station_id) SELECT *, RANK() OVER (ORDER BY battery_pct ASC) AS priority FROM audit;", keywords: ["with", "join", "select"] }
+                ]
+            },
+
+            // ==================== MONTH 3: NUMPY & PANDAS (KEITH GALLI & COREY SCHAFER) ====================
+            {
+                week: 9, month: 3, days: [
+                    { title: "NumPy Arrays, Shapes & Dtypes", topicBadge: "NumPy Basics", videoId: "QUT1VHiLmmI", start: 0, teacher: "Keith Galli",
+                      task: "Import numpy as np, create a 2x3 float array, and print its .shape, .ndim, and .dtype.",
+                      hint: "arr = np.array([[1.0, 2.0, 3.0], [4.0, 5.0, 6.0]]); print(arr.shape, arr.ndim, arr.dtype)", keywords: ["numpy", "shape", "print"] },
+                    { title: "2D Array Indexing & Boolean Masks", topicBadge: "Array Indexing", videoId: "QUT1VHiLmmI", start: 620, teacher: "Keith Galli",
+                      task: "Given temps = np.array([31.2, 26.4, 24.1, 34.8, 16.5]), use boolean masking to print only values > 25.0.",
+                      hint: "print(temps[temps > 25.0])", keywords: ["numpy", "print"] },
+                    { title: "Vectorized Arithmetic & Universal Functions", topicBadge: "Vectorization", videoId: "QUT1VHiLmmI", start: 1240, teacher: "Keith Galli",
+                      task: "Convert Celsius array c = np.array([16.5, 24.1, 31.2]) to Fahrenheit in one vectorized expression and print it.",
+                      hint: "print(c * 1.8 + 32)", keywords: ["numpy", "print"] },
+                    { title: "NumPy Broadcasting & Linear Algebra", topicBadge: "Broadcasting & LinAlg", videoId: "QUT1VHiLmmI", start: 1800, teacher: "Keith Galli",
+                      task: "Subtract column means from a 3x2 NumPy matrix using broadcasting and print the zero-centered matrix.",
+                      hint: "X = np.array([[10., 20.], [20., 40.], [30., 60.]]); print(X - X.mean(axis=0))", keywords: ["mean", "axis", "print"] },
+                    { title: "Axis-Wise Aggregations (axis=0 vs axis=1)", topicBadge: "Axis Aggregations", videoId: "QUT1VHiLmmI", start: 2400, teacher: "Keith Galli",
+                      task: "Create a 2x4 array and print both column sums (axis=0) and row means (axis=1).",
+                      hint: "M = np.arange(1, 9).reshape(2, 4); print(M.sum(axis=0), M.mean(axis=1))", keywords: ["axis", "print"] },
+                    { title: "Reshaping, Stacking & Matrix Transpose", topicBadge: "Reshaping Arrays", videoId: "QUT1VHiLmmI", start: 2940, teacher: "Keith Galli",
+                      task: "Reshape np.arange(12) into (3, 4), transpose it with .T, and print the new shape.",
+                      hint: "arr = np.arange(12).reshape(3, 4).T; print(arr.shape)", keywords: ["reshape", "print"] },
+                    { title: "Week 9 Capstone: Sensor Matrix Z-Score Scaler", topicBadge: "Week 9 Capstone", videoId: "QUT1VHiLmmI", start: 1800, teacher: "Keith Galli",
+                      task: "Standardize battery = np.array([92, 44, 81, 39, 95]) to Z-scores (x - x.mean()) / x.std() and print rounded to 2 decimals.",
+                      hint: "z = (battery - battery.mean()) / battery.std(); print(np.round(z, 2))", keywords: ["mean", "std", "print"] }
+                ]
+            },
+            {
+                week: 10, month: 3, days: [
+                    { title: "Pandas Loading & Inspecting DataFrames", topicBadge: "Pandas Setup", videoId: "ZyhVh-qRZPA", start: 0, teacher: "Corey Schafer",
+                      task: "Import pandas as pd, load 'movies.csv', and print df.shape and list(df.columns).",
+                      hint: "df = pd.read_csv('movies.csv'); print(df.shape, list(df.columns))", keywords: ["pandas", "movies.csv", "print"] },
+                    { title: "Selecting Columns & Series Operations", topicBadge: "DataFrames & Series", videoId: "ZyhVh-qRZPA", start: 540, teacher: "Corey Schafer",
+                      task: "Load 'movies.csv' and print value_counts() on the 'genre' Series.",
+                      hint: "df = pd.read_csv('movies.csv'); print(df['genre'].value_counts())", keywords: ["value_counts", "movies.csv", "print"] },
+                    { title: ".loc[] Label vs .iloc[] Positional Indexing", topicBadge: "loc & iloc", videoId: "ZyhVh-qRZPA", start: 1080, teacher: "Corey Schafer",
+                      task: "Load 'weather.csv' and use .iloc[0:3, 0:3] to print the first 3 rows and first 3 columns.",
+                      hint: "df = pd.read_csv('weather.csv'); print(df.iloc[0:3, 0:3])", keywords: ["iloc", "weather.csv", "print"] },
+                    { title: "Custom Indexes & set_index()", topicBadge: "Pandas Indexes", videoId: "ZyhVh-qRZPA", start: 1560, teacher: "Corey Schafer",
+                      task: "Load 'weather.csv', set 'station_id' as the index, and print df.loc['ST-03'].",
+                      hint: "df = pd.read_csv('weather.csv').set_index('station_id'); print(df.loc['ST-03'])", keywords: ["set_index", "loc", "print"] },
+                    { title: "Inspecting Data Types & Summary Stats", topicBadge: "Schema Inspection", videoId: "ZyhVh-qRZPA", start: 300, teacher: "Corey Schafer",
+                      task: "Load 'sensors.csv' and print df.dtypes alongside df['battery_pct'].mean().",
+                      hint: "df = pd.read_csv('sensors.csv'); print(df.dtypes); print(df['battery_pct'].mean())", keywords: ["dtypes", "sensors.csv", "print"] },
+                    { title: "Multi-Column Label Slicing with .loc", topicBadge: "Label Slicing", videoId: "ZyhVh-qRZPA", start: 1200, teacher: "Corey Schafer",
+                      task: "Load 'movies.csv' and print rows 1 through 4 for columns ['title', 'rating'] using .loc.",
+                      hint: "df = pd.read_csv('movies.csv'); print(df.loc[1:4, ['title', 'rating']])", keywords: ["loc", "movies.csv", "print"] },
+                    { title: "Week 10 Capstone: Multi-Dataset Inspector", topicBadge: "Week 10 Capstone", videoId: "ZyhVh-qRZPA", start: 0, teacher: "Corey Schafer",
+                      task: "Load 'weather.csv' and 'sensors.csv', merge them on 'station_id', and print the merged DataFrame.",
+                      hint: "w = pd.read_csv('weather.csv'); s = pd.read_csv('sensors.csv'); print(pd.merge(w, s, on='station_id'))", keywords: ["merge", "station_id", "print"] }
+                ]
+            },
+            {
+                week: 11, month: 3, days: [
+                    { title: "Pandas Conditional Filtering & Boolean Masks", topicBadge: "Conditional Filtering", videoId: "Lw2rlcxScZY", start: 0, teacher: "Corey Schafer",
+                      task: "Load 'movies.csv' and print rows where df['rating'] >= 8.6.",
+                      hint: "df = pd.read_csv('movies.csv'); print(df[df['rating'] >= 8.6])", keywords: ["movies.csv", "8.6", "print"] },
+                    { title: "Compound & (AND) and | (OR) Filters", topicBadge: "Compound Filters", videoId: "Lw2rlcxScZY", start: 360, teacher: "Corey Schafer",
+                      task: "Filter 'movies.csv' for genre == 'Sci-Fi' AND year >= 2014, printing only the 'title' column.",
+                      hint: "filt = (df['genre'] == 'Sci-Fi') & (df['year'] >= 2014); print(df.loc[filt, 'title'])", keywords: ["&", "movies.csv", "print"] },
+                    { title: "Negating Filters with ~ & .isin()", topicBadge: "isin() Filtering", videoId: "Lw2rlcxScZY", start: 660, teacher: "Corey Schafer",
+                      task: "Filter 'weather.csv' where city is in ['Pune', 'Bengaluru', 'Shimla'] using .isin() and print it.",
+                      hint: "df = pd.read_csv('weather.csv'); print(df[df['city'].isin(['Pune', 'Bengaluru', 'Shimla'])])", keywords: ["isin", "weather.csv", "print"] },
+                    { title: "String Pattern Matching with .str.contains()", topicBadge: "String Filters", videoId: "Lw2rlcxScZY", start: 900, teacher: "Corey Schafer",
+                      task: "Filter 'movies.csv' for titles containing 'In' (case-insensitive) using .str.contains() and print them.",
+                      hint: "df = pd.read_csv('movies.csv'); print(df[df['title'].str.contains('In', case=False)])", keywords: ["str.contains", "movies.csv", "print"] },
+                    { title: "Weather Threshold Anomaly Filtering", topicBadge: "Weather Filtering", videoId: "Lw2rlcxScZY", start: 180, teacher: "Corey Schafer",
+                      task: "Load 'weather.csv' and print cities where temp_c > 28 or humidity > 70.",
+                      hint: "df = pd.read_csv('weather.csv'); print(df[(df['temp_c'] > 28) | (df['humidity'] > 70)]['city'])", keywords: ["|", "weather.csv", "print"] },
+                    { title: "Sensor Calibration Audit Filtering", topicBadge: "Sensor Audits", videoId: "Lw2rlcxScZY", start: 520, teacher: "Corey Schafer",
+                      task: "Load 'sensors.csv' and print station_ids where calibrated == 0 or battery_pct < 50.",
+                      hint: "df = pd.read_csv('sensors.csv'); print(df[(df['calibrated'] == 0) | (df['battery_pct'] < 50)])", keywords: ["sensors.csv", "print"] },
+                    { title: "Week 11 Capstone: High-Signal Subset Extractor", topicBadge: "Week 11 Capstone", videoId: "Lw2rlcxScZY", start: 0, teacher: "Corey Schafer",
+                      task: "Merge 'weather.csv' and 'sensors.csv', then filter for calibrated == 1 and temp_c < 30, printing city and battery_pct.",
+                      hint: "m = pd.merge(pd.read_csv('weather.csv'), pd.read_csv('sensors.csv'), on='station_id'); print(m[(m['calibrated']==1) & (m['temp_c']<30)][['city', 'battery_pct']])", keywords: ["merge", "print"] }
+                ]
+            },
+            {
+                week: 12, month: 3, days: [
+                    { title: "Pandas Sorting DataFrames (sort_values)", topicBadge: "Pandas Sorting", videoId: "T11QYVfZoD0", start: 0, teacher: "Corey Schafer",
+                      task: "Load 'movies.csv', sort by 'rating' descending, and print ['title', 'rating'].",
+                      hint: "df = pd.read_csv('movies.csv'); print(df.sort_values(by='rating', ascending=False)[['title', 'rating']])", keywords: ["sort_values", "movies.csv", "print"] },
+                    { title: "Multi-Column Sorting with Mixed Directions", topicBadge: "Multi-Key Sort", videoId: "T11QYVfZoD0", start: 300, teacher: "Corey Schafer",
+                      task: "Sort 'movies.csv' by ['genre', 'rating'] with ascending=[True, False] and print ['genre', 'title', 'rating'].",
+                      hint: "df.sort_values(by=['genre', 'rating'], ascending=[True, False])", keywords: ["sort_values", "ascending", "print"] },
+                    { title: "nlargest() & nsmallest() Top-K Extraction", topicBadge: "nlargest & nsmallest", videoId: "T11QYVfZoD0", start: 540, teacher: "Corey Schafer",
+                      task: "Use df.nlargest(3, 'temp_c') on 'weather.csv' and print the top 3 hottest cities.",
+                      hint: "df = pd.read_csv('weather.csv'); print(df.nlargest(3, 'temp_c')[['city', 'temp_c']])", keywords: ["nlargest", "weather.csv", "print"] },
+                    { title: "Sorting Indexes & Restoring Row Order", topicBadge: "sort_index()", videoId: "T11QYVfZoD0", start: 420, teacher: "Corey Schafer",
+                      task: "Sort 'weather.csv' by humidity descending, then call .sort_index() to restore original order and print.",
+                      hint: "df = pd.read_csv('weather.csv').sort_values('humidity'); print(df.sort_index())", keywords: ["sort_index", "weather.csv", "print"] },
+                    { title: "Combining Filtering + Sorting Pipelines", topicBadge: "Filter + Sort", videoId: "T11QYVfZoD0", start: 180, teacher: "Corey Schafer",
+                      task: "Filter 'movies.csv' for Drama films and sort them by 'year' ascending, printing title and year.",
+                      hint: "df = pd.read_csv('movies.csv'); print(df[df['genre']=='Drama'].sort_values('year')[['title', 'year']])", keywords: ["sort_values", "movies.csv", "print"] },
+                    { title: "GroupBy Aggregations & Ranked Summaries", topicBadge: "Grouped Ranking", videoId: "T11QYVfZoD0", start: 600, teacher: "Corey Schafer",
+                      task: "Group 'movies.csv' by 'genre', compute mean rating, sort descending, and print.",
+                      hint: "df = pd.read_csv('movies.csv'); print(df.groupby('genre')['rating'].mean().sort_values(ascending=False))", keywords: ["groupby", "sort_values", "print"] },
+                    { title: "Month 3 Capstone: End-to-End Pandas Pipeline", topicBadge: "Month 3 Capstone", videoId: "T11QYVfZoD0", start: 0, teacher: "Corey Schafer",
+                      task: "Merge 'weather.csv' and 'sensors.csv', filter calibrated == 1, sort by battery_pct DESC, and print city & battery_pct.",
+                      hint: "m = pd.merge(pd.read_csv('weather.csv'), pd.read_csv('sensors.csv'), on='station_id'); print(m[m['calibrated']==1].sort_values('battery_pct', ascending=False)[['city', 'battery_pct']])", keywords: ["merge", "sort_values", "print"] }
+                ]
+            },
+
+            // ==================== MONTH 4: STATISTICS, PROBABILITY & EDA (STATQUEST) ====================
+            {
+                week: 13, month: 4, days: [
+                    { title: "p-values & Statistical Significance", topicBadge: "p-values", videoId: "vemZtEM63GY", start: 0, teacher: "StatQuest • Josh Starmer",
+                      task: "Given observed_p = 0.018 and alpha = 0.05, print whether the result is statistically significant (True/False).",
+                      hint: "observed_p = 0.018; alpha = 0.05; print('Significant:', observed_p < alpha)", keywords: ["0.05", "print"] },
+                    { title: "Null Hypothesis & False Positive Rates", topicBadge: "Null Hypothesis", videoId: "vemZtEM63GY", start: 240, teacher: "StatQuest • Josh Starmer",
+                      task: "Simulate 1000 random uniform p-values in NumPy and print the proportion that fall below alpha = 0.05.",
+                      hint: "import numpy as np; np.random.seed(42); p = np.random.uniform(0, 1, 1000); print(round((p < 0.05).mean(), 3))", keywords: ["numpy", "0.05", "print"] },
+                    { title: "Two-Tailed vs One-Tailed Test Intuition", topicBadge: "Two-Tailed Tests", videoId: "vemZtEM63GY", start: 480, teacher: "StatQuest • Josh Starmer",
+                      task: "Convert a one-tailed tail probability tail_p = 0.014 into a two-tailed p-value and compare against alpha = 0.05.",
+                      hint: "two_tailed = min(1.0, tail_p * 2); print(two_tailed, two_tailed < 0.05)", keywords: ["2", "print"] },
+                    { title: "Permutation Sampling & Empirical p-values", topicBadge: "Permutation Test", videoId: "vemZtEM63GY", start: 120, teacher: "StatQuest • Josh Starmer",
+                      task: "Compute the observed mean difference between group_a = [22, 24, 21, 23] and group_b = [29, 31, 28, 30] in NumPy and print it.",
+                      hint: "import numpy as np; print(np.mean([29,31,28,30]) - np.mean([22,24,21,23]))", keywords: ["mean", "print"] },
+                    { title: "Sample Size & Standard Error Reduction", topicBadge: "Standard Error", videoId: "vemZtEM63GY", start: 360, teacher: "StatQuest • Josh Starmer",
+                      task: "Compute Standard Error (std / sqrt(n)) for std = 12.0 at n = 25 vs n = 400 and print both.",
+                      hint: "import math; print(12.0 / math.sqrt(25), 12.0 / math.sqrt(400))", keywords: ["sqrt", "print"] },
+                    { title: "Bonferroni Correction for Multiple Tests", topicBadge: "Bonferroni Guard", videoId: "vemZtEM63GY", start: 540, teacher: "StatQuest • Josh Starmer",
+                      task: "Adjust alpha = 0.05 across m = 10 simultaneous hypothesis tests using Bonferroni (alpha / m) and print the new threshold.",
+                      hint: "print(0.05 / 10)", keywords: ["0.05", "10", "print"] },
+                    { title: "Week 13 Capstone: Permutation Hypothesis Runner", topicBadge: "Week 13 Capstone", videoId: "vemZtEM63GY", start: 0, teacher: "StatQuest • Josh Starmer",
+                      task: "Run a 500-iteration permutation test comparing control = [10, 12, 11, 13] and variant = [16, 18, 17, 19] and print the empirical p-value.",
+                      hint: "Shuffle pooled array with np.random.permutation and count splits >= observed diff.", keywords: ["permutation", "print"] }
+                ]
+            },
+            {
+                week: 14, month: 4, days: [
+                    { title: "Least Squares & Linear Fit Intuition", topicBadge: "Least Squares", videoId: "PaFPbb66DxQ", start: 0, teacher: "StatQuest • Josh Starmer",
+                      task: "Fit a degree-1 line to x = np.array([1, 2, 3, 4, 5]) and y = np.array([2.1, 3.9, 6.2, 7.8, 10.1]) using np.polyfit(x, y, 1) and print slope & intercept.",
+                      hint: "slope, intercept = np.polyfit(x, y, 1); print(round(slope, 2), round(intercept, 2))", keywords: ["polyfit", "print"] },
+                    { title: "Residuals & Sum of Squared Errors (SSE)", topicBadge: "Residuals & SSE", videoId: "PaFPbb66DxQ", start: 180, teacher: "StatQuest • Josh Starmer",
+                      task: "Given y_true = np.array([10, 20, 30]) and y_pred = np.array([11, 19, 32]), compute and print SSE = np.sum((y_true - y_pred)**2).",
+                      hint: "sse = np.sum((y_true - y_pred)**2); print(sse)", keywords: ["sum", "print"] },
+                    { title: "Closed-Form Slope & Intercept Derivation", topicBadge: "Slope Formula", videoId: "PaFPbb66DxQ", start: 360, teacher: "StatQuest • Josh Starmer",
+                      task: "Compute covariance(x, y) / variance(x) manually in NumPy for x = [1, 2, 3, 4] and y = [3, 5, 7, 9] and print the slope.",
+                      hint: "x = np.array([1,2,3,4]); y = np.array([3,5,7,9]); slope = np.sum((x-x.mean())*(y-y.mean())) / np.sum((x-x.mean())**2); print(slope)", keywords: ["mean", "sum", "print"] },
+                    { title: "Fitting Temperature vs Humidity Trend", topicBadge: "Weather Trend Fit", videoId: "PaFPbb66DxQ", start: 240, teacher: "StatQuest • Josh Starmer",
+                      task: "Load 'weather.csv', fit np.polyfit(df['temp_c'], df['humidity'], 1), and print the slope.",
+                      hint: "df = pd.read_csv('weather.csv'); m, b = np.polyfit(df['temp_c'], df['humidity'], 1); print(round(m, 3))", keywords: ["weather.csv", "polyfit", "print"] },
+                    { title: "Outlier Leverage on Least Squares", topicBadge: "Outlier Leverage", videoId: "PaFPbb66DxQ", start: 420, teacher: "StatQuest • Josh Starmer",
+                      task: "Compare np.polyfit slope on [1, 2, 3, 4] -> [2, 4, 6, 8] vs adding an outlier (10, 2) and print both slopes.",
+                      hint: "s1 = np.polyfit([1,2,3,4], [2,4,6,8], 1)[0]; s2 = np.polyfit([1,2,3,4,10], [2,4,6,8,2], 1)[0]; print(round(s1, 2), round(s2, 2))", keywords: ["polyfit", "print"] },
+                    { title: "RMSE vs MAE Error Metrics", topicBadge: "RMSE vs MAE", videoId: "PaFPbb66DxQ", start: 300, teacher: "StatQuest • Josh Starmer",
+                      task: "Compute both MAE and RMSE for err = np.array([1.0, -2.0, 1.0, 4.0]) and print them rounded to 3 decimals.",
+                      hint: "mae = np.mean(np.abs(err)); rmse = np.sqrt(np.mean(err**2)); print(round(mae, 3), round(rmse, 3))", keywords: ["sqrt", "mean", "print"] },
+                    { title: "Week 14 Capstone: NumPy Least-Squares Fitter", topicBadge: "Week 14 Capstone", videoId: "PaFPbb66DxQ", start: 0, teacher: "StatQuest • Josh Starmer",
+                      task: "Fit a line to x = [10, 20, 30, 40], y = [15, 25, 35, 45], predict y at x = 50, and print the prediction.",
+                      hint: "m, b = np.polyfit(x, y, 1); print(round(m * 50 + b, 1))", keywords: ["polyfit", "print"] }
+                ]
+            },
+            {
+                week: 15, month: 4, days: [
+                    { title: "R-Squared & Variance Explained", topicBadge: "R-Squared", videoId: "bMccdk8EdGo", start: 0, teacher: "StatQuest • Josh Starmer",
+                      task: "Compute R-squared = 1 - (ss_res / ss_tot) given ss_res = 12.0 and ss_tot = 80.0, and print it.",
+                      hint: "print(1 - (12.0 / 80.0))", keywords: ["1", "80", "print"] },
+                    { title: "Total vs Residual Sum of Squares", topicBadge: "Variance Decomposition", videoId: "bMccdk8EdGo", start: 180, teacher: "StatQuest • Josh Starmer",
+                      task: "Given y = np.array([10, 20, 30, 40]) and y_hat = np.array([12, 19, 31, 38]), compute ss_tot and ss_res and print R².",
+                      hint: "ss_tot = np.sum((y - y.mean())**2); ss_res = np.sum((y - y_hat)**2); print(round(1 - ss_res/ss_tot, 4))", keywords: ["mean", "sum", "print"] },
+                    { title: "Correlation (r) vs R-Squared", topicBadge: "Correlation vs R²", videoId: "bMccdk8EdGo", start: 360, teacher: "StatQuest • Josh Starmer",
+                      task: "Load 'weather.csv', compute Pearson r = df['temp_c'].corr(df['humidity']), and print both r and r**2.",
+                      hint: "df = pd.read_csv('weather.csv'); r = df['temp_c'].corr(df['humidity']); print(round(r, 3), round(r**2, 3))", keywords: ["corr", "weather.csv", "print"] },
+                    { title: "R² Implementation Function", topicBadge: "R² Function", videoId: "bMccdk8EdGo", start: 240, teacher: "StatQuest • Josh Starmer",
+                      task: "Write a reusable function r2_score_np(y_true, y_pred) and test it on [3, -0.5, 2, 7] vs [2.5, 0.0, 2, 8].",
+                      hint: "def r2_score_np(yt, yp): yt, yp = np.array(yt), np.array(yp); return 1 - np.sum((yt-yp)**2)/np.sum((yt-yt.mean())**2)", keywords: ["def", "return", "print"] },
+                    { title: "Residual Diagnostics & Zero-Mean Check", topicBadge: "Residual Checks", videoId: "bMccdk8EdGo", start: 420, teacher: "StatQuest • Josh Starmer",
+                      task: "Verify that residuals from an OLS fit on x = [1,2,3,4,5], y = [2,5,4,8,10] sum to ~0 and print np.round(residuals.sum(), 6).",
+                      hint: "m, b = np.polyfit(x, y, 1); res = y - (m*np.array(x) + b); print(np.round(res.sum(), 6))", keywords: ["polyfit", "sum", "print"] },
+                    { title: "IQR, Variance & Standard Deviation Spread", topicBadge: "Variance & IQR", videoId: "bMccdk8EdGo", start: 120, teacher: "StatQuest • Josh Starmer",
+                      task: "Load 'movies.csv' and print the mean, median, std, and IQR (75th - 25th percentile) of 'rating'.",
+                      hint: "r = pd.read_csv('movies.csv')['rating']; q75, q25 = np.percentile(r, [75, 25]); print(r.mean(), r.median(), q75 - q25)", keywords: ["percentile", "movies.csv", "print"] },
+                    { title: "Week 15 Capstone: Goodness-of-Fit Evaluator", topicBadge: "Week 15 Capstone", videoId: "bMccdk8EdGo", start: 0, teacher: "StatQuest • Josh Starmer",
+                      task: "Fit a line to 'movies.csv' (year vs rating), compute R², and print whether year explains > 10% of rating variance.",
+                      hint: "df = pd.read_csv('movies.csv'); r = df['year'].corr(df['rating']); print(round(r**2, 4), (r**2) > 0.10)", keywords: ["corr", "movies.csv", "print"] }
+                ]
+            },
+            {
+                week: 16, month: 4, days: [
+                    { title: "Multiple Regression & F-Statistic Intuition", topicBadge: "Multiple Regression", videoId: "zITIFTsivN8", start: 0, teacher: "StatQuest • Josh Starmer",
+                      task: "Solve a 2-feature linear model y = b0 + b1*x1 + b2*x2 using np.linalg.lstsq on a 4-row design matrix and print coefficients.",
+                      hint: "X = np.column_stack([np.ones(4), [1,2,3,4], [2,1,4,3]]); y = np.array([5,6,11,12]); beta, *_ = np.linalg.lstsq(X, y, rcond=None); print(np.round(beta, 2))", keywords: ["lstsq", "print"] },
+                    { title: "Adjusted R² & Penalizing Extra Predictors", topicBadge: "Adjusted R²", videoId: "zITIFTsivN8", start: 240, teacher: "StatQuest • Josh Starmer",
+                      task: "Compute Adjusted R² = 1 - (1 - r2) * (n - 1) / (n - p - 1) for r2 = 0.85, n = 50, p = 5 and print it.",
+                      hint: "adj_r2 = 1 - (1 - 0.85) * (50 - 1) / (50 - 5 - 1); print(round(adj_r2, 4))", keywords: ["0.85", "print"] },
+                    { title: "Multi-Feature Weather Humidity Model", topicBadge: "Multi-Feature Fit", videoId: "zITIFTsivN8", start: 420, teacher: "StatQuest • Josh Starmer",
+                      task: "Load 'weather.csv' and 'sensors.csv', merge them, and print the correlation matrix across temp_c, humidity, and battery_pct.",
+                      hint: "m = pd.merge(pd.read_csv('weather.csv'), pd.read_csv('sensors.csv'), on='station_id'); print(m[['temp_c', 'humidity', 'battery_pct']].corr())", keywords: ["corr", "merge", "print"] },
+                    { title: "Collinearity & Predictor Correlation Check", topicBadge: "Collinearity", videoId: "zITIFTsivN8", start: 540, teacher: "StatQuest • Josh Starmer",
+                      task: "Create x1 = np.array([1, 2, 3, 4, 5]) and x2 = x1 * 2.0 + 0.01, compute np.corrcoef(x1, x2)[0, 1], and flag if > 0.95.",
+                      hint: "r = np.corrcoef(x1, x2)[0, 1]; print(round(r, 4), 'Collinear:', abs(r) > 0.95)", keywords: ["corrcoef", "print"] },
+                    { title: "Comparing Nested Models by Variance Gain", topicBadge: "Nested Models", videoId: "zITIFTsivN8", start: 320, teacher: "StatQuest • Josh Starmer",
+                      task: "Compare Model A (R² = 0.62) vs Model B (R² = 0.79) and print the percentage-point variance improvement.",
+                      hint: "print(round((0.79 - 0.62) * 100, 1), '% gain')", keywords: ["0.79", "0.62", "print"] },
+                    { title: "Bootstrap 95% Confidence Intervals", topicBadge: "Confidence Intervals", videoId: "zITIFTsivN8", start: 180, teacher: "StatQuest • Josh Starmer",
+                      task: "Draw 500 bootstrap sample means from [24.1, 26.4, 31.2, 34.8, 16.5] with seed 7 and print the 2.5th and 97.5th percentiles.",
+                      hint: "np.random.seed(7); d = [24.1,26.4,31.2,34.8,16.5]; means = [np.mean(np.random.choice(d, len(d), True)) for _ in range(500)]; print(np.round(np.percentile(means, [2.5, 97.5]), 2))", keywords: ["percentile", "choice", "print"] },
+                    { title: "Month 4 Capstone: Statistical EDA & Fit Report", topicBadge: "Month 4 Capstone", videoId: "zITIFTsivN8", start: 0, teacher: "StatQuest • Josh Starmer",
+                      task: "Load 'weather.csv', print describe() summary stats, and print the Pearson r between temp_c and humidity.",
+                      hint: "df = pd.read_csv('weather.csv'); print(df.describe()); print('r =', round(df['temp_c'].corr(df['humidity']), 3))", keywords: ["describe", "corr", "print"] }
+                ]
+            },
+
+            // ==================== MONTH 5: MACHINE LEARNING & MODELING (STATQUEST + TRACK) ====================
+            {
+                week: 17, month: 5, days: [
+                    { title: "Linear Regression Models for Prediction", topicBadge: "Linear Models", videoId: "u1cc1r_Y7M0", start: 0, teacher: "StatQuest • Josh Starmer",
+                      task: "Train a linear regression fit on train_x = [1, 2, 3, 4], train_y = [2.5, 5.1, 7.4, 10.2] and evaluate MAE on test_x = [5, 6], test_y = [12.6, 15.0].",
+                      hint: "m, b = np.polyfit(train_x, train_y, 1); preds = m * np.array(test_x) + b; print(round(np.mean(np.abs(test_y - preds)), 3))", keywords: ["polyfit", "mean", "print"] },
+                    { title: "Feature Scaling (Min-Max & Standard)", topicBadge: "Feature Scaling", videoId: "u1cc1r_Y7M0", start: 240, teacher: "StatQuest • Josh Starmer",
+                      task: "Apply Min-Max scaling (x - x.min()) / (x.max() - x.min()) to vals = np.array([20, 40, 60, 100]) and print.",
+                      hint: "scaled = (vals - vals.min()) / (vals.max() - vals.min()); print(scaled)", keywords: ["min", "max", "print"] },
+                    { title: "Gradient Descent Step Intuition", topicBadge: "Gradient Descent", videoId: "u1cc1r_Y7M0", start: 480, teacher: "StatQuest • Josh Starmer",
+                      task: "Run 20 steps of gradient descent minimizing f(w) = (w - 4)**2 starting at w = 0.0 with lr = 0.1 and print final w.",
+                      hint: "w = 0.0\nfor _ in range(20):\n    w = w - 0.1 * 2 * (w - 4)\nprint(round(w, 4))", keywords: ["for", "print"] },
+                    { title: "Zero-Leakage Train/Test Split", topicBadge: "Train/Test Split", videoId: "u1cc1r_Y7M0", start: 360, teacher: "StatQuest • Josh Starmer",
+                      task: "Fit StandardScaler statistics (mean, std) ONLY on train = [10, 12, 14, 16] and apply them to transform test = [18, 20], printing test_z.",
+                      hint: "mu, sd = np.mean(train), np.std(train); print(np.round((np.array(test) - mu) / sd, 3))", keywords: ["mean", "std", "print"] },
+                    { title: "Continuous Regression Metrics Suite", topicBadge: "Regression Metrics", videoId: "u1cc1r_Y7M0", start: 600, teacher: "StatQuest • Josh Starmer",
+                      task: "Print a dictionary containing 'MAE', 'RMSE', and 'MAPE' for y_true = np.array([100, 200, 300]) and y_pred = np.array([110, 190, 315]).",
+                      hint: "err = y_true - y_pred; print({'MAE': round(np.mean(np.abs(err)), 2), 'RMSE': round(np.sqrt(np.mean(err**2)), 2)})", keywords: ["abs", "sqrt", "print"] },
+                    { title: "One-Hot Encoding Categorical Features", topicBadge: "One-Hot Encoding", videoId: "u1cc1r_Y7M0", start: 180, teacher: "StatQuest • Josh Starmer",
+                      task: "Load 'movies.csv' and apply pd.get_dummies(df[['genre', 'rating']]) to print the encoded feature columns.",
+                      hint: "df = pd.read_csv('movies.csv'); print(pd.get_dummies(df[['genre', 'rating']]).head(3))", keywords: ["get_dummies", "movies.csv", "print"] },
+                    { title: "Week 17 Capstone: Track Regression Forecaster", topicBadge: "Week 17 Capstone", videoId: "u1cc1r_Y7M0", start: 0, teacher: "StatQuest • Josh Starmer",
+                      task: "Build and evaluate a 2-feature linear model using np.linalg.lstsq and print its R² score.",
+                      hint: "Fit X -> y with np.linalg.lstsq, compute predictions X @ beta, and print R².", keywords: ["lstsq", "print"] }
+                ]
+            },
+            {
+                week: 18, month: 5, days: [
+                    { title: "Decision & Classification Trees Explained", topicBadge: "Decision Trees", videoId: "_L39rN6gz7Y", start: 0, teacher: "StatQuest • Josh Starmer",
+                      task: "Write a 2-level decision tree function predict_tree(temp, humidity) returning 'Alert' if temp > 30 and humidity > 70 else 'Normal', and test it.",
+                      hint: "def predict_tree(t, h): return 'Alert' if (t > 30 and h > 70) else 'Normal'\nprint(predict_tree(31.2, 78))", keywords: ["def", "if", "print"] },
+                    { title: "Gini Impurity & Split Quality", topicBadge: "Gini Impurity", videoId: "_L39rN6gz7Y", start: 300, teacher: "StatQuest • Josh Starmer",
+                      task: "Write gini(p) = 1 - (p**2 + (1 - p)**2) and print Gini impurity for p = 0.5 (mixed) vs p = 1.0 (pure).",
+                      hint: "def gini(p): return 1 - (p**2 + (1-p)**2)\nprint(gini(0.5), gini(1.0))", keywords: ["def", "0.5", "print"] },
+                    { title: "Finding Optimal Numeric Split Threshold", topicBadge: "Threshold Search", videoId: "_L39rN6gz7Y", start: 600, teacher: "StatQuest • Josh Starmer",
+                      task: "Evaluate candidate thresholds [20, 25, 30] on x = [18, 22, 27, 33], y = [0, 0, 1, 1] and print the threshold giving 100% accuracy.",
+                      hint: "for t in [20, 25, 30]: preds = [int(v >= t) for v in x]; print(t, sum(p == a for p, a in zip(preds, y)) / len(y))", keywords: ["for", "print"] },
+                    { title: "Tree Depth & Overfitting Guardrails", topicBadge: "Tree Pruning", videoId: "_L39rN6gz7Y", start: 840, teacher: "StatQuest • Josh Starmer",
+                      task: "Compare train vs validation accuracy across max_depth = {1: (0.76, 0.75), 3: (0.88, 0.86), 12: (0.99, 0.71)} and print the best generalizing depth.",
+                      hint: "depths = {1: (0.76, 0.75), 3: (0.88, 0.86), 12: (0.99, 0.71)}; print(max(depths, key=lambda d: depths[d][1]))", keywords: ["max", "print"] },
+                    { title: "Confusion Matrix, Precision & Recall", topicBadge: "Precision & Recall", videoId: "_L39rN6gz7Y", start: 420, teacher: "StatQuest • Josh Starmer",
+                      task: "Given y_true = [1, 0, 1, 1, 0, 1] and y_pred = [1, 0, 1, 0, 1, 1], compute TP, FP, FN, Precision, and Recall.",
+                      hint: "tp = sum(t==1 and p==1 for t,p in zip(y_true, y_pred)); print('Precision:', tp / sum(y_pred))", keywords: ["sum", "zip", "print"] },
+                    { title: "F1-Score & Probability Threshold Tuning", topicBadge: "F1 Calibration", videoId: "_L39rN6gz7Y", start: 720, teacher: "StatQuest • Josh Starmer",
+                      task: "Convert probabilities probs = [0.25, 0.48, 0.62, 0.85] to binary predictions using threshold = 0.45 and print them.",
+                      hint: "print([int(p >= 0.45) for p in [0.25, 0.48, 0.62, 0.85]])", keywords: ["0.45", "print"] },
+                    { title: "Week 18 Capstone: Track Classification Engine", topicBadge: "Week 18 Capstone", videoId: "_L39rN6gz7Y", start: 0, teacher: "StatQuest • Josh Starmer",
+                      task: "Classify all rows in 'sensors.csv' as 'Service' if calibrated == 0 or battery_pct < 50 else 'Healthy' and print value_counts().",
+                      hint: "df = pd.read_csv('sensors.csv'); status = np.where((df['calibrated']==0)|(df['battery_pct']<50), 'Service', 'Healthy'); print(pd.Series(status).value_counts())", keywords: ["sensors.csv", "print"] }
+                ]
+            },
+            {
+                week: 19, month: 5, days: [
+                    { title: "Random Forests: Bootstrapping & Bagging", topicBadge: "Random Forests", videoId: "J4Wdy0Wc_xQ", start: 0, teacher: "StatQuest • Josh Starmer",
+                      task: "Generate 3 bootstrap samples of size 5 from data = [10, 20, 30, 40, 50] with seed 12 and print each sample.",
+                      hint: "np.random.seed(12)\nfor i in range(3): print(np.random.choice([10,20,30,40,50], 5, replace=True))", keywords: ["choice", "replace", "print"] },
+                    { title: "Random Feature Subsets & Decorrelation", topicBadge: "Feature Subsets", videoId: "J4Wdy0Wc_xQ", start: 240, teacher: "StatQuest • Josh Starmer",
+                      task: "Given 9 total features, compute the standard classification max_features = int(math.sqrt(9)) and sample 3 feature names.",
+                      hint: "import math; cols = [f'f{i}' for i in range(9)]; print(np.random.choice(cols, int(math.sqrt(9)), replace=False))", keywords: ["sqrt", "print"] },
+                    { title: "Out-of-Bag (OOB) Sample Detection", topicBadge: "Out-of-Bag Error", videoId: "J4Wdy0Wc_xQ", start: 420, teacher: "StatQuest • Josh Starmer",
+                      task: "Given all_ids = {0, 1, 2, 3, 4, 5} and bootstrap_bag = [0, 2, 2, 5, 0, 3], print the sorted Out-of-Bag (OOB) indices.",
+                      hint: "print(sorted({0,1,2,3,4,5} - set([0,2,2,5,0,3])))", keywords: ["set", "sorted", "print"] },
+                    { title: "Majority Voting Ensemble in Python", topicBadge: "Ensemble Voting", videoId: "J4Wdy0Wc_xQ", start: 180, teacher: "StatQuest • Josh Starmer",
+                      task: "Combine predictions from 3 trees: t1 = [1, 0, 1], t2 = [1, 1, 0], t3 = [0, 0, 1] by majority vote and print final labels.",
+                      hint: "votes = np.vstack([t1, t2, t3]); print((votes.mean(axis=0) >= 0.5).astype(int))", keywords: ["mean", "print"] },
+                    { title: "Bias-Variance Tradeoff in Ensembles", topicBadge: "Bias vs Variance", videoId: "J4Wdy0Wc_xQ", start: 320, teacher: "StatQuest • Josh Starmer",
+                      task: "Show how averaging 5 noisy estimators reduces variance: compute variance of single trial vs row-wise mean of a (100, 5) normal matrix.",
+                      hint: "np.random.seed(1); m = np.random.randn(100, 5); print(round(m[:,0].var(), 3), round(m.mean(axis=1).var(), 3))", keywords: ["var", "mean", "print"] },
+                    { title: "Feature Importance Normalization", topicBadge: "Feature Importance", videoId: "J4Wdy0Wc_xQ", start: 500, teacher: "StatQuest • Josh Starmer",
+                      task: "Normalize raw Gini gains raw = {'temp_c': 14.2, 'humidity': 5.8, 'battery_pct': 20.0} so importances sum to 1.0 and print.",
+                      hint: "tot = sum(raw.values()); print({k: round(v/tot, 3) for k, v in raw.items()})", keywords: ["sum", "print"] },
+                    { title: "Week 19 Capstone: Track Ensemble Benchmark", topicBadge: "Week 19 Capstone", videoId: "J4Wdy0Wc_xQ", start: 0, teacher: "StatQuest • Josh Starmer",
+                      task: "Aggregate 5 tree probability vectors and evaluate ensemble accuracy against y_true = [1, 0, 1, 1], printing the score.",
+                      hint: "probs = np.array([[0.8,0.2,0.7,0.9],[0.6,0.4,0.8,0.7],[0.9,0.3,0.4,0.8]]); preds = (probs.mean(axis=0)>=0.5).astype(int); print((preds == [1,0,1,1]).mean())", keywords: ["mean", "print"] }
+                ]
+            },
+            {
+                week: 20, month: 5, days: [
+                    { title: "Cross-Validation Clearly Explained (K-Fold)", topicBadge: "Cross-Validation", videoId: "fSytzGwwBVw", start: 0, teacher: "StatQuest • Josh Starmer",
+                      task: "Compute mean and standard deviation across 5 CV fold accuracies [0.82, 0.85, 0.80, 0.86, 0.84] and print 'Mean ± Std'.",
+                      hint: "s = np.array([0.82, 0.85, 0.80, 0.86, 0.84]); print(f'{s.mean():.3f} ± {s.std():.3f}')", keywords: ["mean", "std", "print"] },
+                    { title: "Implementing K-Fold Index Splits", topicBadge: "K-Fold Splits", videoId: "fSytzGwwBVw", start: 180, teacher: "StatQuest • Josh Starmer",
+                      task: "Split indices np.arange(20) into 4 equal validation folds using np.array_split and print each fold.",
+                      hint: "for i, fold in enumerate(np.array_split(np.arange(20), 4), 1): print(f'Fold {i}:', fold)", keywords: ["array_split", "print"] },
+                    { title: "Stratified Class Balance Verification", topicBadge: "Stratified CV", videoId: "fSytzGwwBVw", start: 300, teacher: "StatQuest • Josh Starmer",
+                      task: "Verify positive class rate in fold_1 = [1, 0, 0, 1, 0] vs fold_2 = [0, 1, 0, 0, 1] and print whether they match.",
+                      hint: "print(np.mean([1,0,0,1,0]) == np.mean([0,1,0,0,1]))", keywords: ["mean", "print"] },
+                    { title: "Grid Search Hyperparameter Selection", topicBadge: "Hyperparameter CV", videoId: "fSytzGwwBVw", start: 420, teacher: "StatQuest • Josh Starmer",
+                      task: "Select the hyperparameter tuple with highest mean CV score from {('depth=3', 0.84), ('depth=5', 0.88), ('depth=8', 0.83)} and print it.",
+                      hint: "results = {'depth=3': 0.84, 'depth=5': 0.88, 'depth=8': 0.83}; print(max(results, key=results.get))", keywords: ["max", "print"] },
+                    { title: "5-Fold vs 10-Fold Computational Budget", topicBadge: "CV Fold Tradeoffs", videoId: "fSytzGwwBVw", start: 240, teacher: "StatQuest • Josh Starmer",
+                      task: "Calculate total model fits required for a 4x3 hyperparameter grid under 5-fold vs 10-fold CV and print both counts.",
+                      hint: "grid = 4 * 3; print('5-fold:', grid * 5, '10-fold:', grid * 10)", keywords: ["5", "10", "print"] },
+                    { title: "Zero-Leakage Fold Preprocessing Pipeline", topicBadge: "Zero-Leakage CV", videoId: "fSytzGwwBVw", start: 360, teacher: "StatQuest • Josh Starmer",
+                      task: "Write a loop over 3 folds where each fold computes train_mean strictly from training indices before centering val indices.",
+                      hint: "Exclude val_idx when computing train_mean inside the fold loop.", keywords: ["for", "mean", "print"] },
+                    { title: "Month 5 Capstone: Cross-Validated Track Model", topicBadge: "Month 5 Capstone", videoId: "fSytzGwwBVw", start: 0, teacher: "StatQuest • Josh Starmer",
+                      task: "Run a 4-fold cross-validation loop evaluating a threshold classifier on synthetic data and print the mean CV accuracy.",
+                      hint: "Split 20 samples into 4 folds, find best threshold on train, score on val, and print np.mean(scores).", keywords: ["for", "mean", "print"] }
+                ]
+            },
+
+            // ==================== MONTH 6: PORTFOLIO APPS, STREAMLIT & INTERVIEW MASTERY ====================
+            {
+                week: 21, month: 6, days: [
+                    { title: "Interactive Data Apps with Streamlit", topicBadge: "Streamlit Basics", videoId: "KcXag5QRsHg", start: 0, teacher: "Data Science for Everyone",
+                      task: "Generate a clean Streamlit app script string importing streamlit and pandas to display 'weather.csv' metrics and print it.",
+                      hint: "script = \"import streamlit as st\\nimport pandas as pd\\nst.title('Weather Explorer')\\ndf = pd.read_csv('weather.csv')\\nst.dataframe(df)\"\nprint(script)", keywords: ["streamlit", "weather.csv", "print"] },
+                    { title: "Sidebar Filters & Interactive Widgets", topicBadge: "Streamlit Widgets", videoId: "KcXag5QRsHg", start: 300, teacher: "Data Science for Everyone",
+                      task: "Simulate a Streamlit sidebar filter function filter_dashboard(min_rating, genre) on 'movies.csv' and print matching titles.",
+                      hint: "def filter_dashboard(min_r, g): df = pd.read_csv('movies.csv'); return df[(df['rating']>=min_r)&(df['genre']==g)]['title'].tolist()\nprint(filter_dashboard(8.5, 'Sci-Fi'))", keywords: ["def", "movies.csv", "print"] },
+                    { title: "Data Caching & Fast App Re-Runs", topicBadge: "Streamlit Caching", videoId: "KcXag5QRsHg", start: 600, teacher: "Data Science for Everyone",
+                      task: "Implement a simple memoization cache dictionary around a data loader function and print cache hit vs miss.",
+                      hint: "cache = {}\ndef load_cached(name):\n    if name not in cache: cache[name] = pd.read_csv(name)\n    return cache[name]\nprint(len(load_cached('movies.csv')))", keywords: ["def", "cache", "print"] },
+                    { title: "KPI Metric Cards & Delta Calculations", topicBadge: "KPI Metric Cards", videoId: "KcXag5QRsHg", start: 900, teacher: "Data Science for Everyone",
+                      task: "Compute KPI summary dict {'avg_temp': ..., 'active_sensors': ...} from 'weather.csv' and 'sensors.csv' and print it.",
+                      hint: "w = pd.read_csv('weather.csv'); s = pd.read_csv('sensors.csv'); print({'avg_temp': round(w['temp_c'].mean(), 1), 'active': int(s['calibrated'].sum())})", keywords: ["weather.csv", "sensors.csv", "print"] },
+                    { title: "Packaging app.py & requirements.txt", topicBadge: "App Packaging", videoId: "KcXag5QRsHg", start: 1200, teacher: "Data Science for Everyone",
+                      task: "Format and print a pinned requirements.txt string listing streamlit, pandas, numpy, and scikit-learn.",
+                      hint: "print('streamlit>=1.38.0\\npandas>=2.2.0\\nnumpy>=1.26.0\\nscikit-learn>=1.5.0')", keywords: ["streamlit", "pandas", "print"] },
+                    { title: "Schema Contracts for User CSV Uploads", topicBadge: "Upload Guardrails", videoId: "KcXag5QRsHg", start: 450, teacher: "Data Science for Everyone",
+                      task: "Write validate_upload(df, required_cols) checking set(required_cols).issubset(df.columns) on 'movies.csv' and print True.",
+                      hint: "df = pd.read_csv('movies.csv'); print({'title', 'rating'}.issubset(df.columns))", keywords: ["issubset", "movies.csv", "print"] },
+                    { title: "Week 21 Capstone: Track Streamlit App Blueprint", topicBadge: "Week 21 Capstone", videoId: "KcXag5QRsHg", start: 0, teacher: "Data Science for Everyone",
+                      task: "Build a complete dashboard backend function returning KPI cards and top-3 filtered records for your specialization track.",
+                      hint: "Combine filtering, sorting, and summary stats into one clean function and print the returned dict.", keywords: ["def", "return", "print"] }
+                ]
+            },
+            {
+                week: 22, month: 6, days: [
+                    { title: "Full ML Web Apps Architecture", topicBadge: "ML Web Apps", videoId: "JwSS70SZdyM", start: 0, teacher: "Data Professor • freeCodeCamp",
+                      task: "Design a modular prediction pipeline predict_payload(features_dict) returning {'prediction': ..., 'confidence': ...} and print a test call.",
+                      hint: "def predict_payload(f): score = round(0.4*f['x1'] + 0.6*f['x2'], 3); return {'prediction': int(score>0.5), 'confidence': score}\nprint(predict_payload({'x1': 0.8, 'x2': 0.7}))", keywords: ["def", "return", "print"] },
+                    { title: "Automated Exploratory Data Analysis (EDA) App", topicBadge: "EDA Web App", videoId: "JwSS70SZdyM", start: 1784, teacher: "Data Professor • freeCodeCamp",
+                      task: "Write an automated EDA profiler function eda_profile(csv_name) returning rows, cols, missing_cells, and numeric_cols for 'weather.csv'.",
+                      hint: "df = pd.read_csv('weather.csv'); print({'rows': len(df), 'cols': df.shape[1], 'missing': int(df.isna().sum().sum())})", keywords: ["weather.csv", "isna", "print"] },
+                    { title: "Interactive Correlation & Distribution Engine", topicBadge: "EDA Engine", videoId: "JwSS70SZdyM", start: 2400, teacher: "Data Professor • freeCodeCamp",
+                      task: "Compute pairwise correlations on numeric columns of 'movies.csv' and print the strongest feature correlation.",
+                      hint: "df = pd.read_csv('movies.csv'); print(df[['year', 'rating']].corr().round(3))", keywords: ["corr", "movies.csv", "print"] },
+                    { title: "Live Classification Web App Backend", topicBadge: "Classification App", videoId: "JwSS70SZdyM", start: 6647, teacher: "Data Professor • freeCodeCamp",
+                      task: "Implement a logistic probability inference function classify_sample(x1, x2) using sigmoid(1.8*x1 - 1.2*x2) and print class + prob.",
+                      hint: "import math; z = 1.8*0.9 - 1.2*0.2; p = 1/(1+math.exp(-z)); print(int(p>=0.5), round(p, 3))", keywords: ["exp", "print"] },
+                    { title: "Real-Time Probability & Class Confidence UI", topicBadge: "Live Inference", videoId: "JwSS70SZdyM", start: 7200, teacher: "Data Professor • freeCodeCamp",
+                      task: "Format class probabilities [0.12, 0.88] into human-readable percentage labels {'Class 0': '12.0%', 'Class 1': '88.0%'} and print.",
+                      hint: "probs = [0.12, 0.88]; print({f'Class {i}': f'{p*100:.1f}%' for i, p in enumerate(probs)})", keywords: ["enumerate", "print"] },
+                    { title: "Serializing Model Weights to JSON", topicBadge: "Model Artifacts", videoId: "JwSS70SZdyM", start: 7600, teacher: "Data Professor • freeCodeCamp",
+                      task: "Serialize a model artifact dict {'weights': [0.45, -0.22], 'intercept': 1.1, 'version': 'v1'} with json.dumps and print it.",
+                      hint: "import json; print(json.dumps({'weights': [0.45, -0.22], 'intercept': 1.1, 'version': 'v1'}))", keywords: ["json", "dumps", "print"] },
+                    { title: "Week 22 Capstone: Track Classification App", topicBadge: "Week 22 Capstone", videoId: "JwSS70SZdyM", start: 6647, teacher: "Data Professor • freeCodeCamp",
+                      task: "Combine schema validation, probability inference, and JSON output into a complete classification endpoint function and print output.",
+                      hint: "Validate keys, compute probability, and print a clean JSON response string.", keywords: ["def", "print"] }
+                ]
+            },
+            {
+                week: 23, month: 6, days: [
+                    { title: "Live Regression Forecasting Web App", topicBadge: "Regression App", videoId: "JwSS70SZdyM", start: 8168, teacher: "Data Professor • freeCodeCamp",
+                      task: "Build a regression prediction function forecast_value(temp_c) trained on 'weather.csv' (temp_c -> humidity) and print forecast for 29.0°C.",
+                      hint: "df = pd.read_csv('weather.csv'); m, b = np.polyfit(df['temp_c'], df['humidity'], 1); print(round(m*29.0 + b, 1))", keywords: ["polyfit", "weather.csv", "print"] },
+                    { title: "Dynamic What-If Slider Simulation", topicBadge: "What-If Simulator", videoId: "JwSS70SZdyM", start: 8800, teacher: "Data Professor • freeCodeCamp",
+                      task: "Generate a sensitivity table predicting model output across slider values [15, 20, 25, 30, 35] and print the dictionary.",
+                      hint: "print({t: round(85 - 1.1*t, 1) for t in [15, 20, 25, 30, 35]})", keywords: ["for", "print"] },
+                    { title: "GitHub Repository Structure for Cloud Apps", topicBadge: "Cloud Deployment", videoId: "JwSS70SZdyM", start: 11077, teacher: "Data Professor • freeCodeCamp",
+                      task: "Verify and print a clean project directory manifest ['app.py', 'model.json', 'requirements.txt', 'README.md'].",
+                      hint: "files = ['app.py', 'model.json', 'requirements.txt', 'README.md']; print('\\n'.join(files))", keywords: ["app.py", "requirements.txt", "print"] },
+                    { title: "Deploying to Streamlit Community Cloud", topicBadge: "Live Cloud Hosting", videoId: "JwSS70SZdyM", start: 11400, teacher: "Data Professor • freeCodeCamp",
+                      task: "Write a health-check function app_healthcheck() verifying that 'movies.csv', 'weather.csv', and 'sensors.csv' all exist and print '200 OK'.",
+                      hint: "import os; assert all(os.path.exists(f) for f in ['movies.csv','weather.csv','sensors.csv']); print('200 OK')", keywords: ["exists", "print"] },
+                    { title: "Writing Recruiter-Grade Project READMEs", topicBadge: "Portfolio Docs", videoId: "JwSS70SZdyM", start: 11800, teacher: "Data Professor • freeCodeCamp",
+                      task: "Generate and print a structured Markdown project card with Problem, Dataset, Metric (R² / F1), and Live Demo sections.",
+                      hint: "print('## Capstone Project\\n- **Dataset**: Clean Telemetry\\n- **Validation**: 5-Fold CV (0.87 F1)')", keywords: ["##", "print"] },
+                    { title: "Latency & Fallback Guardrails Audit", topicBadge: "Production Audit", videoId: "JwSS70SZdyM", start: 9400, teacher: "Data Professor • freeCodeCamp",
+                      task: "Wrap a prediction call in try/except returning {'error': 'Invalid input'} on ValueError and test with bad input.",
+                      hint: "try:\n    float('bad')\nexcept ValueError:\n    print({'error': 'Invalid input'})", keywords: ["try", "except", "print"] },
+                    { title: "Week 23 Capstone: Deployed Track Capstone App", topicBadge: "Week 23 Capstone", videoId: "JwSS70SZdyM", start: 11077, teacher: "Data Professor • freeCodeCamp",
+                      task: "Run an end-to-end simulation of your deployed web app: load CSV, run model inference, and print the formatted executive summary.",
+                      hint: "Load a dataset, compute predictions, and print the final summary report.", keywords: ["print"] }
+                ]
+            },
+            {
+                week: 24, month: 6, days: [
+                    { title: "Python Live Coding Interview Drill", topicBadge: "Python Interview", videoId: "9Os0o3wzS_I", start: 0, teacher: "Corey Schafer",
+                      task: "Implement first_unique(nums) in O(n) time returning the first non-repeating integer in [4, 5, 1, 2, 0, 4, 5] and print it.",
+                      hint: "from collections import Counter; c = Counter(nums); print(next(x for x in nums if c[x] == 1))", keywords: ["Counter", "print"] },
+                    { title: "SQL Whiteboard Interview Drill", topicBadge: "SQL Interview", videoId: "wp8f2ShK9Ro", start: 0, teacher: "Alex The Analyst",
+                      task: "In SQLite SQL mode, query 'movies' to find the 2nd highest rated movie per genre using DENSE_RANK() OVER (PARTITION BY genre ORDER BY rating DESC).",
+                      hint: "WITH r AS (SELECT title, genre, rating, DENSE_RANK() OVER (PARTITION BY genre ORDER BY rating DESC) AS dr FROM movies) SELECT title, genre, rating FROM r WHERE dr = 2;", keywords: ["dense_rank", "partition by", "movies"] },
+                    { title: "Pandas Data Wrangling Speed Drill", topicBadge: "Pandas Interview", videoId: "T11QYVfZoD0", start: 0, teacher: "Corey Schafer",
+                      task: "Load 'movies.csv', group by 'genre', and print a summary DataFrame with count, mean_rating, and max_year.",
+                      hint: "df = pd.read_csv('movies.csv'); print(df.groupby('genre').agg(count=('title','count'), mean_rating=('rating','mean'), max_year=('year','max')))", keywords: ["groupby", "agg", "print"] },
+                    { title: "Statistics & A/B Testing Case Study Drill", topicBadge: "Stats Case Study", videoId: "vemZtEM63GY", start: 0, teacher: "StatQuest • Josh Starmer",
+                      task: "Calculate relative lift ((variant - control) / control) * 100 for control = 0.124 and variant = 0.141 and print rounded to 2 decimals.",
+                      hint: "print(round(((0.141 - 0.124) / 0.124) * 100, 2), '% lift')", keywords: ["0.141", "0.124", "print"] },
+                    { title: "ML System Design & Trade-Offs Defense", topicBadge: "ML System Design", videoId: "fSytzGwwBVw", start: 0, teacher: "StatQuest • Josh Starmer",
+                      task: "Print a structured engineering decision matrix comparing Linear Model vs Random Forest across Interpretability, Latency, and Nonlinearity.",
+                      hint: "print('Linear: High Interpretability, <1ms | Random Forest: Nonlinear, High Accuracy')", keywords: ["print"] },
+                    { title: "Portfolio Walkthrough & Executive Storytelling", topicBadge: "Portfolio Defense", videoId: "JwSS70SZdyM", start: 11077, teacher: "Data Professor • freeCodeCamp",
+                      task: "Compile and print your 3-bullet STAR (Situation, Task, Action, Result) pitch summarizing your Capstone App.",
+                      hint: "print('Situation: ...\\nAction: Built & deployed ML pipeline\\nResult: +8.4% lift')", keywords: ["print"] },
+                    { title: "Day 168 Graduation: Full-Stack Data Scientist", topicBadge: "Graduation Day 168", videoId: "JwSS70SZdyM", start: 0, teacher: "Data Professor • freeCodeCamp",
+                      task: "Print your official Day 168 DataForge Graduation Summary celebrating 168 days of Python, SQL, Stats, ML, and Deployed Apps!",
+                      hint: "print('DATAFORGE 168-DAY GRADUATE — READY FOR DATA SCIENCE ROLES')", keywords: ["print"] }
                 ]
             }
         ];
 
-        // Generate all 168 days cleanly across 6 months (28 days per month)
+        // Assemble all 168 distinct days cleanly across 24 weeks
         const CURRICULUM_DAYS = [];
-        MONTH_BLUEPRINTS.forEach((bp) => {
-            for (let dInMonth = 1; dInMonth <= 28; dInMonth++) {
-                const globalDay = (bp.month - 1) * 28 + dInMonth;
-                const weekNum = Math.ceil(dInMonth / 7);
-                const topic = bp.topics[(dInMonth - 1) % bp.topics.length];
-                const isCapstone = dInMonth % 7 === 0;
-                const displayTitle = dInMonth <= 7
-                    ? topic.title
-                    : `${topic.title} (W${weekNum} Applied)`;
+        WEEKLY_CURRICULUM.forEach((wk) => {
+            const meta = MONTH_META[wk.month - 1];
+            wk.days.forEach((item, idxInWeek) => {
+                const globalDay = (wk.week - 1) * 7 + (idxInWeek + 1);
+                const isCapstone = idxInWeek === 6;
+                const startSec = item.start || 0;
 
                 CURRICULUM_DAYS.push({
                     day: globalDay,
-                    month: bp.month,
-                    week: (bp.month - 1) * 4 + weekNum,
-                    monthTitle: bp.title,
-                    tag: bp.tag,
-                    videoId: bp.videoId,
-                    title: displayTitle,
+                    month: wk.month,
+                    week: wk.week,
+                    monthTitle: meta.title,
+                    tag: meta.tag,
+                    teacher: item.teacher,
+                    topicBadge: item.topicBadge,
+                    videoId: item.videoId,
+                    start: startSec,
+                    title: item.title,
                     isCapstone,
-                    overview: `Month ${bp.month} (${bp.title}) • Week ${weekNum}: Master ${topic.title.toLowerCase()} using clean, domain-neutral datasets (movies.csv, weather.csv, sensors.csv) so your core intuition transfers to any industry.`,
+                    overview: `Month ${wk.month} (${meta.title}) • Week ${wk.week} with ${item.teacher}: Master ${item.title} through hands-on practice on clean, domain-neutral datasets (movies.csv, weather.csv, sensors.csv).`,
                     takeaways: [
-                        `Core Syntax & Mental Model: How ${topic.title} works cleanly in production workflows.`,
-                        `Domain-Neutral Practice: Apply the pattern directly on built-in datasets without boilerplate noise.`,
-                        `Edge-Case Guardrails: Prevent null/type bugs before moving to downstream modeling.`,
-                        `Interview Readiness: Articulate the time/accuracy trade-offs clearly in plain English.`
+                        `Instructor Walkthrough (${item.teacher}): Core mechanics of ${item.topicBadge}.`,
+                        `Hands-On Implementation: Translate today's concept directly into clean, working code.`,
+                        `Edge-Case & Schema Hygiene: Validate types, nulls, and boundary conditions.`,
+                        `Production & Interview Framing: Explain why and when to use ${item.topicBadge}.`
                     ],
-                    task: topic.task,
-                    hint: topic.hint,
-                    keywords: topic.keywords
+                    task: item.task,
+                    hint: item.hint,
+                    keywords: item.keywords
                 });
-            }
+            });
         });
 
         // =========================================================================
@@ -924,7 +1458,10 @@
                 document.body.classList.add("twilight-theme");
                 document.getElementById("themeToggleBtn").innerHTML = '<i class="fa-solid fa-sun text-amber-400"></i>';
             }
-            document.getElementById("specializationSelect").value = state.track || "product";
+            if (!SPECIALIZATION_TRACKS[state.track]) {
+                state.track = "product";
+            }
+            document.getElementById("specializationSelect").value = state.track;
             document.getElementById("gistTokenInput").value = state.gistToken || "";
             document.getElementById("gistIdInput").value = state.gistId || "";
             document.getElementById("geminiKeyInput").value = state.geminiKey || "";
@@ -1009,6 +1546,17 @@
             if (next !== state.currentDay) loadDay(next);
         }
 
+        function formatSecondsTimestamp(sec) {
+            const total = Math.max(0, Number(sec) || 0);
+            const hrs = Math.floor(total / 3600);
+            const mins = Math.floor((total % 3600) / 60);
+            const secs = total % 60;
+            if (hrs > 0) {
+                return `${hrs}:${String(mins).padStart(2, "0")}:${String(secs).padStart(2, "0")}`;
+            }
+            return `${String(mins).padStart(2, "0")}:${String(secs).padStart(2, "0")}`;
+        }
+
         function loadDay(dayNum) {
             const dayObj = CURRICULUM_DAYS[dayNum - 1] || CURRICULUM_DAYS[0];
             state.currentDay = dayObj.day;
@@ -1019,16 +1567,30 @@
 
             document.getElementById("headerDayCounter").innerText = `Day ${dayObj.day} / 168`;
             document.getElementById("headerLessonTitle").innerText = dayObj.title;
-            document.getElementById("activeModuleBadge").innerText = `Month ${dayObj.month} • ${dayObj.monthTitle}`;
+            document.getElementById("activeModuleBadge").innerText = `Month ${dayObj.month} • Week ${dayObj.week} • ${dayObj.monthTitle}`;
             document.getElementById("activeTrackBadge").innerText = isSpecMonth
                 ? `Track: ${trackObj.name}`
                 : "Domain-Neutral Core Foundation";
 
-            // Update YouTube Player
-            setYoutubeVideoById(dayObj.videoId, false);
+            // Update Instructor & Topic Badges in Video Header
+            document.getElementById("videoTeacherBadge").innerText = dayObj.teacher;
+            document.getElementById("videoTopicBadge").innerText = dayObj.topicBadge;
+            document.getElementById("videoTimestampBadge").innerText = dayObj.start > 0
+                ? `Chapter @ ${formatSecondsTimestamp(dayObj.start)}`
+                : "Full Lesson";
+
+            // Update YouTube Player with unique videoId & start timestamp
+            setYoutubeVideoById(dayObj.videoId, dayObj.start || 0, false);
+
+            // Auto-switch editor mode hint for Month 2 SQL days (or Day 163 SQL interview)
+            if (dayObj.tag === "#SQL" && state.editorMode !== "sql") {
+                setEditorMode("sql");
+            } else if (dayObj.tag !== "#SQL" && state.editorMode === "sql" && dayObj.day !== 163) {
+                setEditorMode("python");
+            }
 
             // Update Lesson Concepts view
-            document.getElementById("conceptHeading").innerText = `Day ${dayObj.day}: ${dayObj.title}`;
+            document.getElementById("conceptHeading").innerText = `Day ${dayObj.day}: ${dayObj.title} (${dayObj.teacher})`;
             document.getElementById("conceptOverview").innerText = isSpecMonth
                 ? `${dayObj.overview} Specialization framing: applied to ${trackObj.capstoneDomain}.`
                 : dayObj.overview;
@@ -1039,9 +1601,9 @@
                 </li>
             `).join("");
 
-            // Update On-Demand Challenge text (stays hidden unless user toggles it)
+            // Update On-Demand Challenge text
             document.getElementById("challengeTaskText").innerText = isSpecMonth
-                ? `${dayObj.task} (Context: ${trackObj.name})`
+                ? `${dayObj.task} (Track Context: ${trackObj.name})`
                 : dayObj.task;
             document.getElementById("challengeHintBox").innerText = `Hint: ${dayObj.hint}`;
             document.getElementById("challengeHintBox").classList.add("hidden");
@@ -1083,34 +1645,37 @@
             const query = (document.getElementById("roadmapSearchInput").value || "").trim().toLowerCase();
 
             let html = "";
-            MONTH_BLUEPRINTS.forEach(bp => {
+            MONTH_META.forEach(bp => {
                 const monthDays = CURRICULUM_DAYS.filter(d => d.month === bp.month && (
                     !query ||
                     d.title.toLowerCase().includes(query) ||
+                    d.teacher.toLowerCase().includes(query) ||
+                    d.topicBadge.toLowerCase().includes(query) ||
                     d.tag.toLowerCase().includes(query) ||
-                    `day ${d.day}`.includes(query)
+                    `day ${d.day}`.includes(query) ||
+                    `week ${d.week}`.includes(query)
                 ));
                 if (monthDays.length === 0) return;
 
                 const doneInMonth = CURRICULUM_DAYS.filter(d => d.month === bp.month && state.completedDays.includes(d.day)).length;
-                const badgeText = bp.month <= 4 ? "DOMAIN-NEUTRAL CORE" : "SPECIALIZATION TRACK";
+                const badgeText = bp.month <= 4 ? `CORE • ${bp.leadTeacher.toUpperCase()}` : `TRACK • ${bp.leadTeacher.toUpperCase()}`;
 
                 html += `
                     <div class="sub-pill rounded-2xl p-2.5 space-y-1.5">
                         <div class="flex items-center justify-between px-1">
                             <div>
-                                <span class="text-[9px] font-mono text-appleBlue font-semibold block">${badgeText}</span>
+                                <span class="text-[9px] font-mono text-appleBlue font-semibold block">${escapeHtml(badgeText)}</span>
                                 <h3 class="text-xs font-bold text-main">Month ${bp.month}: ${bp.title}</h3>
                             </div>
                             <span class="text-[10px] font-mono text-muted">${doneInMonth}/28</span>
                         </div>
-                        <div class="space-y-1 max-h-48 overflow-y-auto pr-0.5">
+                        <div class="space-y-1 max-h-52 overflow-y-auto pr-0.5">
                             ${monthDays.map(d => {
                                 const isActive = d.day === state.currentDay;
                                 const isDone = state.completedDays.includes(d.day);
                                 return `
                                     <button onclick="selectRoadmapDay(${d.day})" class="w-full text-left px-2.5 py-1.5 rounded-xl text-xs transition flex items-center justify-between gap-2 ${isActive ? 'bg-appleBlue text-white font-semibold' : 'text-main hover:bg-appleBlue/10'}">
-                                        <span class="truncate"><span class="font-mono opacity-75 mr-1">${String(d.day).padStart(2, '0')}</span> ${escapeHtml(d.title)}</span>
+                                        <span class="truncate"><span class="font-mono opacity-75 mr-1">${String(d.day).padStart(3, '0')}</span> ${escapeHtml(d.title)}</span>
                                         ${isDone ? '<i class="fa-solid fa-circle-check text-appleGreen text-[11px] shrink-0"></i>' : (d.isCapstone ? '<i class="fa-solid fa-trophy text-appleAmber text-[10px] shrink-0"></i>' : '')}
                                     </button>
                                 `;
@@ -1178,13 +1743,17 @@
             return null;
         }
 
-        let currentLoadedVideoId = "EsDFiZPljYo";
+        let currentLoadedVideoId = "k9TUPpGqYTo";
+        let currentLoadedVideoStart = 0;
 
-        function setYoutubeVideoById(videoId, notify = true) {
+        function setYoutubeVideoById(videoId, start = 0, notify = true) {
             currentLoadedVideoId = videoId;
-            const embedUrl = `https://www.youtube.com/embed/${videoId}?rel=0&modestbranding=1&playsinline=1`;
+            currentLoadedVideoStart = Math.max(0, Number(start) || 0);
+            const embedUrl = `https://www.youtube.com/embed/${videoId}?start=${currentLoadedVideoStart}&rel=0`;
             document.getElementById("ytPlayer").src = embedUrl;
-            document.getElementById("youtubeDirectAnchor").href = `https://www.youtube.com/watch?v=${videoId}`;
+            document.getElementById("youtubeDirectAnchor").href = currentLoadedVideoStart > 0
+                ? `https://www.youtube.com/watch?v=${videoId}&t=${currentLoadedVideoStart}s`
+                : `https://www.youtube.com/watch?v=${videoId}`;
             if (notify) showToast("Loaded YouTube video in player");
         }
 
@@ -1195,12 +1764,19 @@
                 showToast("Paste a valid YouTube video URL or 11-character ID");
                 return;
             }
-            setYoutubeVideoById(id, true);
+            const timeMatch = raw.match(/[?&](?:t|start)=(\d+)/);
+            const startSec = timeMatch ? parseInt(timeMatch[1], 10) : 0;
+            document.getElementById("videoTeacherBadge").innerText = "Custom YouTube Video";
+            document.getElementById("videoTopicBadge").innerText = id;
+            document.getElementById("videoTimestampBadge").innerText = startSec > 0
+                ? `Start @ ${formatSecondsTimestamp(startSec)}`
+                : "Custom Link";
+            setYoutubeVideoById(id, startSec, true);
             switchLeftPaneView("video");
         }
 
         function openFloatMiniWindow() {
-            const url = `https://www.youtube.com/embed/${currentLoadedVideoId}?autoplay=1&rel=0`;
+            const url = `https://www.youtube.com/embed/${currentLoadedVideoId}?start=${currentLoadedVideoStart}&autoplay=1&rel=0`;
             window.open(url, "DataForgeMiniPlayer", "width=480,height=290,menubar=no,toolbar=no,location=no,status=no,resizable=yes");
         }
 
@@ -1648,7 +2224,7 @@ sql_out
             instinctMessages = [
                 {
                     role: "ai",
-                    text: `Synced to Day ${dayObj.day} (${dayObj.title}). Ask me what you'll learn in this video, have me review your code, or search StackOverflow & Wikipedia live with zero API key!`,
+                    text: `Synced to Day ${dayObj.day}: ${dayObj.title} (${dayObj.teacher} • ${dayObj.topicBadge}). Ask me what you'll learn in this video, have me review your code, or search StackOverflow & Wikipedia live!`,
                     sources: []
                 }
             ];
@@ -1714,9 +2290,9 @@ sql_out
 
             // 1. Handle local context-aware shortcuts immediately
             if (qLower.includes("what do i learn") || qLower.includes("this video")) {
-                const reply = `In Day ${dayObj.day} (${dayObj.title}), here are the 4 core concepts covered:\n\n` +
+                const reply = `In Day ${dayObj.day} — "${dayObj.title}" taught by ${dayObj.teacher} (${dayObj.topicBadge}), here are the 4 core concepts covered:\n\n` +
                     dayObj.takeaways.map((t, i) => `${i + 1}. ${t}`).join("\n") +
-                    `\n\nTip: Click 'Load Day's Challenge' in the code pane to test your understanding with unit tests.`;
+                    `\n\nTip: Click 'Load Day's Challenge' in the code pane to solve today's hands-on exercise and validate with unit tests.`;
                 instinctMessages.push({ role: "ai", text: reply, sources: [] });
                 renderInstinctChat();
                 return;
@@ -1878,7 +2454,7 @@ sql_out
             }
             statusEl.innerText = "Pushing...";
             const bodyPayload = {
-                description: "DATAFORGE // INSTINCT OS v5.0 Cloud Sync",
+                description: "DATAFORGE // INSTINCT OS v5.2 Cloud Sync",
                 public: false,
                 files: {
                     "dataforge_sync.json": {
