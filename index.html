@@ -44,7 +44,6 @@
             </div>
         </div>
 
-        <!-- GAMIFIED STATS BAR -->
         <div class="hidden md:flex items-center space-x-6 bg-gray-900/80 border border-gray-800 px-4 py-1.5 rounded-full">
             <div class="flex items-center space-x-2 text-xs">
                 <i class="fa-solid fa-fire text-orange-500 animate-pulse"></i>
@@ -65,7 +64,6 @@
             </div>
         </div>
 
-        <!-- QUICK ACTIONS -->
         <div class="flex items-center space-x-3">
             <button onclick="switchTab('toolbox')" class="bg-gray-800 hover:bg-gray-700 text-xs px-3 py-2 rounded-lg font-medium transition flex items-center gap-1.5 border border-gray-700">
                 <i class="fa-solid fa-toolbox text-cyan-400"></i> Python Sandbox
@@ -106,21 +104,27 @@
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
                     <div class="lg:col-span-2 space-y-6">
                         
-                        <!-- Video Card with Referrer Fix -->
+                        <!-- Video Card with Guaranteed Playback Card -->
                         <div class="bg-gray-900/90 border border-gray-800 rounded-2xl overflow-hidden shadow-lg">
                             <div class="px-4 py-3 bg-gray-950 border-b border-gray-800 flex items-center justify-between">
                                 <div class="flex items-center space-x-2 text-xs font-medium text-gray-300">
                                     <i class="fa-brands fa-youtube text-red-500 text-base"></i>
-                                    <span>Core Lesson Video</span>
+                                    <span>Core Lesson Video Player</span>
                                 </div>
-                                <a id="videoExternalLink" href="#" target="_blank" class="text-xs text-cyan-400 hover:underline flex items-center gap-1">Watch on YouTube <i class="fa-solid fa-external-link-alt text-[10px]"></i></a>
+                                <a id="videoExternalLink" href="#" target="_blank" class="text-xs text-cyan-400 hover:underline flex items-center gap-1">Open on YouTube <i class="fa-solid fa-external-link-alt text-[10px]"></i></a>
                             </div>
-                            <div class="aspect-video w-full bg-black relative flex items-center justify-center" id="videoContainer">
-                                <iframe id="lessonVideoEmbed" class="w-full h-full" src="" title="YouTube video player" frameborder="0" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-                            </div>
-                            <div id="localFileNotice" class="hidden px-4 py-2 bg-amber-950/60 border-t border-amber-800/60 text-[11px] text-amber-300 flex items-center justify-between">
-                                <span><i class="fa-solid fa-circle-info mr-1"></i> Opened locally (`file://`). YouTube requires `https://` (GitHub Pages) for inline playback.</span>
-                                <a id="fallbackNoticeLink" href="#" target="_blank" class="underline font-semibold ml-2 whitespace-nowrap">Open Video ↗</a>
+                            <!-- Fallback Container that bypasses embed restrictions -->
+                            <div class="aspect-video w-full bg-gradient-to-br from-gray-950 via-gray-900 to-black relative flex flex-col items-center justify-center p-6 text-center space-y-4">
+                                <div class="w-16 h-16 rounded-2xl bg-red-600/20 text-red-500 border border-red-500/40 flex items-center justify-center text-2xl shadow-lg">
+                                    <i class="fa-brands fa-youtube"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-white text-sm" id="videoCardTitle">Variables & Python Basics</h4>
+                                    <p class="text-xs text-gray-400 mt-1">Watch this structured video tutorial to master today's concept.</p>
+                                </div>
+                                <a id="videoPlayBtn" href="#" target="_blank" class="bg-red-600 hover:bg-red-500 text-white font-bold px-6 py-2.5 rounded-xl text-xs transition flex items-center gap-2 shadow-lg shadow-red-950">
+                                    <i class="fa-solid fa-play"></i> Watch Lesson on YouTube ↗
+                                </a>
                             </div>
                         </div>
 
@@ -309,9 +313,6 @@ print(f"High-value transactions count: {len(high_value)}")
         }
 
         window.onload = function() {
-            if (window.location.protocol === 'file:') {
-                document.getElementById('localFileNotice').classList.remove('hidden');
-            }
             updateStatsUI();
             renderNotes();
             renderSidebar();
@@ -364,10 +365,12 @@ print(f"High-value transactions count: {len(high_value)}")
             document.getElementById('currentMonthBadge').innerText = dayObj.monthName + ' // ' + dayObj.weekName;
             document.getElementById('currentDayTitle').innerText = dayObj.title;
             document.getElementById('currentDayDesc').innerText = dayObj.desc;
+            
             const watchUrl = `https://www.youtube.com/watch?v=${dayObj.videoId}`;
-            document.getElementById('lessonVideoEmbed').src = `https://www.youtube-nocookie.com/embed/${dayObj.videoId}?rel=0`;
             document.getElementById('videoExternalLink').href = watchUrl;
-            document.getElementById('fallbackNoticeLink').href = watchUrl;
+            document.getElementById('videoPlayBtn').href = watchUrl;
+            document.getElementById('videoCardTitle').innerText = dayObj.title;
+
             document.getElementById('exercisePromptText').innerText = dayObj.exercise;
             document.getElementById('exerciseStarterCode').innerText = dayObj.starter;
             renderSidebar();
